@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.Windows;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -16,13 +17,16 @@ public class GameManager : MonoBehaviour
     public GameObject answerCube4;
     public GameObject answerCube5;
     public GameObject answerCube6;
+    public GameObject answerCubeCurrentPosition;
     public TextMeshProUGUI answerLetter1;
     public TextMeshProUGUI answerLetter2;
     public TextMeshProUGUI answerLetter3;
     public TextMeshProUGUI answerLetter4;
     public TextMeshProUGUI answerLetter5;
     public TextMeshProUGUI answerLetter6;
+    public TextMeshProUGUI hintItemText;
     public TextMeshProUGUI showScore;
+    public Image hintItemImage;
     private string answer = "열어제쳤다";
     private string answerCheck = "00000";
     private int score = 10000;
@@ -66,6 +70,11 @@ public class GameManager : MonoBehaviour
             answerLetters[i].gameObject.SetActive(isActiveLetter);
         }
 
+        int answerCurrentPosition = answerCheck.IndexOf('0');
+        if (answerCurrentPosition == -1)
+            answerCubeCurrentPosition.SetActive(false);
+        answerCubeCurrentPosition.transform.position = answerCubes[answerCurrentPosition].transform.position;
+
         scoreTimer += Time.deltaTime;
         if (scoreTimer >= 0.008f) {
             score -= 1;
@@ -76,9 +85,23 @@ public class GameManager : MonoBehaviour
         showScore.text = "점수:" + score;
 
         answerTimer += Time.deltaTime;
+        if (answerTimer < 20f) {
+            float fillAmount = Mathf.Clamp01(answerTimer / 20f);
+            hintItemImage.fillAmount = fillAmount;
+        } else {
+            hintItemImage.color = Color.white;
+            hintItemText.color = Color.white;
+        }
+
+    }
+
+    public void InputHint() {
         if (answerTimer >= 20f) {
+            answerTimer = 0;
+            score -= 500;
+            hintItemImage.color = new Color32(151, 151, 151, 255);
+            hintItemText.color = new Color32(136, 126, 0, 255);
             ShowOneAnswer();
-            answerTimer = 0f;
         }
     }
 
