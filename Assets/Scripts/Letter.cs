@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System;
+using System.Reflection;
+using Random = UnityEngine.Random;
 
 public class Letter : MonoBehaviour {
     public TextMeshPro displayText;
@@ -10,6 +13,8 @@ public class Letter : MonoBehaviour {
     public GameObject hp2Image;
     public GameObject hp3Image;
     public GameObject hp4Image;
+    public AudioSource letterPieceBreak;
+    public AudioSource letterPieceClick;
     private bool isFading = false;
     public int hp;
     private float angle = 0f;
@@ -80,9 +85,12 @@ public class Letter : MonoBehaviour {
         StartCoroutine(ShakeCoroutine());
         hp -= 1;
         if (hp == 0) {
+            letterPieceBreak.Play();
             gameManager.InputLetter(displayText.text);
             StartCoroutine(ShrinkAndDestroyCoroutine());
+            return;
         }
+        letterPieceClick.Play();
     }
 
     private IEnumerator ShrinkAndDestroyCoroutine() {
@@ -94,7 +102,7 @@ public class Letter : MonoBehaviour {
             elapsed += Time.deltaTime;
             yield return null;
         }
-        Destroy(gameObject);
+        Destroy(gameObject, letterPieceBreak.clip.length);
     }
 
     private IEnumerator ShakeCoroutine() {
