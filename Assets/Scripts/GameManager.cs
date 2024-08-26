@@ -5,6 +5,12 @@ using TMPro;
 using UnityEngine.Windows;
 using UnityEngine.UI;
 
+class questionList {
+    public string question { get; set; }
+    public string answer { get; set; }
+    public List<char> example { get; set; }
+}
+
 public class GameManager : MonoBehaviour
 {
     public GameObject letterObject;
@@ -27,20 +33,31 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI hintItemText;
     public TextMeshProUGUI showScore;
     public Image hintItemImage;
-    private string answer = "열어제쳤다";
     private string answerCheck = "00000";
     private int score = 10000;
     private float scoreTimer = 0f;
     private float answerTimer = 0f;
+    private string question;
+    private string answer;
+
+    List<questionList> problemList = new List<questionList> {
+        new questionList {question = "갑자기 창문을 벌컥 .", answer = "열어젖히다", example = { '제', '제', '혔', '혔', '쳤', '쳤'}},
+        new questionList {question = "참의 반댓말은 이다.", answer = "거짓", example = { '참', '구', '잣', '가', '젓', '구' }},
+        new questionList {question = "내 이름은 이다.", answer = "새로운친구", example = { '오', '래', '된', '오', '래' }}
+    };
 
     private void Start() {
         TextMeshProUGUI[] answerLetters = new TextMeshProUGUI[] { answerLetter1, answerLetter2, answerLetter3, answerLetter4, answerLetter5, answerLetter6 };
+        int problemIndex = Random.Range(0, problemList.Count);
+        question = problemList[problemIndex].question;
+        answer = problemList[problemIndex].answer;
         for (int i = 0; i < answer.Length; i++) {
             answerLetters[i].text = answer[i].ToString();
         }
+        questionText.text = question;
+
         mainCamera = Camera.main;
         StartCoroutine(SpawnObjectCoroutine());
-        
     }
 
     private IEnumerator SpawnObjectCoroutine() {

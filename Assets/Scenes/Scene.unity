@@ -655,7 +655,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uAC11\uC790\uAE30 \uCC3D\uBB38\uC744 \uBC8C\uCEE5 \uF08B\uF08B\uF08B\uF08B\uF08B."
+  m_text: "\uD574\uC57C\uD560\uAC83:Letter.cs \uACE0\uCE58\uAE30, \uADF8\uB9AC\uACE0
+    \uD2F0\uC2A4\uD1A0\uB9AC \uCC38\uACE0\uD574\uC11C \uC54C\uC544\uC11C \uD558\uACE0
+    \uC774\uAC70 \uD14D\uC2A4\uD2B8 \uC9C0\uC6B0\uAE30 \u3147\u3145\u3147"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2852fc81447f8354784772f6697d6b3d, type: 2}
   m_sharedMaterial: {fileID: 3554555566313338427, guid: 2852fc81447f8354784772f6697d6b3d, type: 2}
