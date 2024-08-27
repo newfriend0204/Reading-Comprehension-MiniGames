@@ -157,8 +157,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 4.6169, y: 840.7461}
-  m_SizeDelta: {x: 886.0892, y: 238.5078}
+  m_AnchoredPosition: {x: 0.00049591, y: 840.7461}
+  m_SizeDelta: {x: 1080, y: 238.5078}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1506034
 MonoBehaviour:
@@ -655,9 +655,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uD574\uC57C\uD560\uAC83:Letter.cs \uACE0\uCE58\uAE30, \uADF8\uB9AC\uACE0
-    \uD2F0\uC2A4\uD1A0\uB9AC \uCC38\uACE0\uD574\uC11C \uC54C\uC544\uC11C \uD558\uACE0
-    \uC774\uAC70 \uD14D\uC2A4\uD2B8 \uC9C0\uC6B0\uAE30 \u3147\u3145\u3147"
+  m_text: "\uBB38\uC81C"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2852fc81447f8354784772f6697d6b3d, type: 2}
   m_sharedMaterial: {fileID: 3554555566313338427, guid: 2852fc81447f8354784772f6697d6b3d, type: 2}
@@ -684,8 +682,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 110
-  m_fontSizeBase: 110
+  m_fontSize: 100
+  m_fontSizeBase: 100
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -916,6 +914,9 @@ MonoBehaviour:
   hintItemText: {fileID: 2041034575}
   showScore: {fileID: 2077623029}
   hintItemImage: {fileID: 359928632}
+  question: 
+  answer: 
+  problemIndex: 0
 --- !u!4 &498235002
 Transform:
   m_ObjectHideFlags: 0

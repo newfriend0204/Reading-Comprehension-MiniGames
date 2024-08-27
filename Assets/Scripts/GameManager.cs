@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine.Windows;
 using UnityEngine.UI;
 
-class questionList {
+public class questionList {
     public string question { get; set; }
     public string answer { get; set; }
     public List<char> example { get; set; }
@@ -37,18 +37,19 @@ public class GameManager : MonoBehaviour
     private int score = 10000;
     private float scoreTimer = 0f;
     private float answerTimer = 0f;
-    private string question;
-    private string answer;
+    public string question;
+    public string answer;
+    public int problemIndex;
 
-    List<questionList> problemList = new List<questionList> {
-        new questionList {question = "갑자기 창문을 벌컥 .", answer = "열어젖히다", example = { '제', '제', '혔', '혔', '쳤', '쳤'}},
-        new questionList {question = "참의 반댓말은 이다.", answer = "거짓", example = { '참', '구', '잣', '가', '젓', '구' }},
-        new questionList {question = "내 이름은 이다.", answer = "새로운친구", example = { '오', '래', '된', '오', '래' }}
+    public List<questionList> problemList = new List<questionList> {
+        new questionList {question = "갑자기 창문을 벌컥 .", answer = "열어젖히다", example = new List<char>{ '제', '제', '혔', '혔', '쳤', '쳤'}},
+        new questionList {question = "참의 반댓말은 이다.", answer = "거짓", example = new List<char>{ '참', '구', '잣', '가', '젓', '구' }},
+        new questionList {question = "내 이름은 이다.", answer = "새로운친구", example = new List<char>{ '오', '래', '된', '오', '래' }}
     };
 
     private void Start() {
         TextMeshProUGUI[] answerLetters = new TextMeshProUGUI[] { answerLetter1, answerLetter2, answerLetter3, answerLetter4, answerLetter5, answerLetter6 };
-        int problemIndex = Random.Range(0, problemList.Count);
+        problemIndex = Random.Range(0, problemList.Count);
         question = problemList[problemIndex].question;
         answer = problemList[problemIndex].answer;
         for (int i = 0; i < answer.Length; i++) {

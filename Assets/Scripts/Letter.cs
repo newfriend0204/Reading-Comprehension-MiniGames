@@ -5,6 +5,7 @@ using TMPro;
 using System;
 using System.Reflection;
 using Random = UnityEngine.Random;
+using Unity.VisualScripting;
 
 public class Letter : MonoBehaviour {
     public TextMeshPro displayText;
@@ -20,10 +21,17 @@ public class Letter : MonoBehaviour {
     private float angle = 0f;
     private int movementType; // 1: y축으로만 상승, 2: 시계방향 회전, 3: 반시계방향 회전
 
+
     private void Start() {
+        gameManager = FindObjectOfType<GameManager>();
         movementType = Random.Range(1, 4);
-        char[] options = { '열', '열', '열', '어', '어', '어', '젖', '젖', '제', '제', '혔', '혔', '쳤', '쳤', '다', '다', '다' };
-        char selectedChar = options[Random.Range(0, options.Length)];
+        List<char> options = new List<char>();
+        options.AddRange(gameManager.problemList[gameManager.problemIndex].example);
+        char[] answer = gameManager.answer.ToCharArray();
+        for (int i = 0; i < 3; i++)
+            options.AddRange(answer);
+        Debug.Log(string.Join(", ", options));
+        char selectedChar = options[Random.Range(0, options.Count)];
         displayText.text = "" + selectedChar;
     }
 
