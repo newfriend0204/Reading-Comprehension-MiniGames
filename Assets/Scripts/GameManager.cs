@@ -4,6 +4,8 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.Windows;
 using UnityEngine.UI;
+using Unity.VisualScripting;
+using static UnityEngine.UI.ScrollRect;
 
 public class questionList {
     public string question { get; set; }
@@ -24,6 +26,7 @@ public class GameManager : MonoBehaviour
     public GameObject answerCube5;
     public GameObject answerCube6;
     public GameObject answerCubeCurrentPosition;
+    public GameObject background;
     public TextMeshProUGUI answerLetter1;
     public TextMeshProUGUI answerLetter2;
     public TextMeshProUGUI answerLetter3;
@@ -33,17 +36,18 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI hintItemText;
     public TextMeshProUGUI showScore;
     public Image hintItemImage;
-    private string answerCheck = "00000";
+    private string answerCheck = "000000";
     private int score = 10000;
     private float scoreTimer = 0f;
     private float answerTimer = 0f;
     public string question;
     public string answer;
     public int problemIndex;
+    private float angle = 0f;
 
     public List<questionList> problemList = new List<questionList> {
         new questionList {question = "갑자기 창문을 벌컥 .", answer = "열어젖히다", example = new List<char>{ '제', '제', '혔', '혔', '쳤', '쳤'}},
-        new questionList {question = "참의 반댓말은 이다.", answer = "거짓", example = new List<char>{ '참', '구', '잣', '가', '젓', '구' }},
+        new questionList {question = "참의 반댓말은 이다.", answer = "거짓", example = new List<char>{ '참', '구', '잣', '가', '젓', '구' }},
         new questionList {question = "내 이름은 이다.", answer = "새로운친구", example = new List<char>{ '오', '래', '된', '오', '래' }}
     };
 
@@ -56,6 +60,8 @@ public class GameManager : MonoBehaviour
             answerLetters[i].text = answer[i].ToString();
         }
         questionText.text = question;
+        if(answer.Length < answerCheck.Length)
+            answerCheck = answerCheck.Substring(0, answer.Length);
 
         mainCamera = Camera.main;
         StartCoroutine(SpawnObjectCoroutine());
@@ -111,6 +117,10 @@ public class GameManager : MonoBehaviour
             hintItemText.color = Color.white;
         }
 
+        angle += Time.deltaTime * 30f;
+        float xOffset = Mathf.Cos(angle * Mathf.Deg2Rad) * 0.005f;
+        float zOffset = Mathf.Sin(angle * Mathf.Deg2Rad) * 0.005f;
+        background.transform.position += new Vector3(xOffset, 0, zOffset);
     }
 
     public void InputHint() {

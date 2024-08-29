@@ -30,7 +30,6 @@ public class Letter : MonoBehaviour {
         char[] answer = gameManager.answer.ToCharArray();
         for (int i = 0; i < 3; i++)
             options.AddRange(answer);
-        Debug.Log(string.Join(", ", options));
         char selectedChar = options[Random.Range(0, options.Count)];
         displayText.text = "" + selectedChar;
     }
