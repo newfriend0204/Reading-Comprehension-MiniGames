@@ -2,10 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using System;
-using System.Reflection;
 using Random = UnityEngine.Random;
-using Unity.VisualScripting;
 
 public class Letter : MonoBehaviour {
     public TextMeshPro displayText;

@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using UnityEngine.Windows;
 using UnityEngine.UI;
-using Unity.VisualScripting;
-using static UnityEngine.UI.ScrollRect;
+using System.Linq;
 
 public class questionList {
     public string question { get; set; }
@@ -13,12 +11,11 @@ public class questionList {
     public List<char> example { get; set; }
 }
 
-public class GameManager : MonoBehaviour
-{
+public class GameManager : MonoBehaviour {
     public GameObject letterObject;
     private Camera mainCamera;
     public TextMeshProUGUI questionText;
-    public GameObject camera;
+    public new GameObject camera;
     public GameObject answerCube1;
     public GameObject answerCube2;
     public GameObject answerCube3;
@@ -36,6 +33,9 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI hintItemText;
     public TextMeshProUGUI showScore;
     public Image hintItemImage;
+    public GameObject stageClear;
+    public TextMeshProUGUI stageClearExplain;
+    public TextMeshProUGUI stageClearScore;
     private string answerCheck = "000000";
     private int score = 10000;
     private float scoreTimer = 0f;
@@ -94,10 +94,17 @@ public class GameManager : MonoBehaviour
             answerLetters[i].gameObject.SetActive(isActiveLetter);
         }
 
+        if (answerCheck.All(c => c == '1')) {
+            StageClear();
+            Time.timeScale = 0;
+        }
+
         int answerCurrentPosition = answerCheck.IndexOf('0');
         if (answerCurrentPosition == -1)
             answerCubeCurrentPosition.SetActive(false);
-        answerCubeCurrentPosition.transform.position = answerCubes[answerCurrentPosition].transform.position;
+        if (!(answerCheck.All(c => c == '1'))) {
+            answerCubeCurrentPosition.transform.position = answerCubes[answerCurrentPosition].transform.position;
+        }
 
         scoreTimer += Time.deltaTime;
         if (scoreTimer >= 0.008f) {
@@ -198,5 +205,16 @@ public class GameManager : MonoBehaviour
             yield return null;
         }
         camera.transform.localPosition = originalPosition;
+    }
+
+    public void StageClear() {
+        stageClear.SetActive(true);
+        stageClearScore.text = "얻은 점수: " + score.ToString();
+        int placeholderCount = question.Count(c => c == '');
+        stageClearExplain.text = question.Replace(new string('', placeholderCount), answer);
+    }
+
+    public void ReturnMainMenu() {
+        Debug.Log("메인메뉴로 돌아갑니다.");
     }
 }
