@@ -6,7 +6,7 @@ using Random = UnityEngine.Random;
 
 public class Letter : MonoBehaviour {
     public TextMeshPro displayText;
-    public GameManager gameManager;
+    public GameManagerGame1 gameManager;
     public GameObject hp1Image;
     public GameObject hp2Image;
     public GameObject hp3Image;
@@ -20,7 +20,7 @@ public class Letter : MonoBehaviour {
 
 
     private void Start() {
-        gameManager = FindObjectOfType<GameManager>();
+        gameManager = FindObjectOfType<GameManagerGame1>();
         movementType = Random.Range(1, 4);
         List<char> options = new List<char>();
         options.AddRange(gameManager.problemList[gameManager.problemIndex].example);
@@ -32,7 +32,7 @@ public class Letter : MonoBehaviour {
     }
 
     private void Update() {
-        gameManager = FindObjectOfType<GameManager>();
+        gameManager = FindObjectOfType<GameManagerGame1>();
         if (movementType == 1) {
             transform.position += new Vector3(0, 6f * Time.deltaTime, 0);
         } else {

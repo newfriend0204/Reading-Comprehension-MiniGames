@@ -11,7 +11,7 @@ public class questionList {
     public List<char> example { get; set; }
 }
 
-public class GameManager : MonoBehaviour {
+public class GameManagerGame1 : MonoBehaviour {
     public GameObject letterObject;
     private Camera mainCamera;
     public TextMeshProUGUI questionText;
