@@ -5,10 +5,28 @@ using UnityEngine;
 public class GameManagerGame2 : MonoBehaviour {
     public GameObject vehicle;
     public new GameObject camera;
+    public Joystick moveobject;
+    private Rigidbody vehicleRigidbody;
+    private float currentSpeed = 0f;
 
-    void Update()
-    {
-        camera.transform.position = vehicle.transform.position + new Vector3(0, 4.528f, -10);
+    void Awake() {
+        Application.targetFrameRate = 60;
+        vehicleRigidbody = vehicle.GetComponent<Rigidbody>();
     }
-    //조이스틱 추가하고 속도는 매끄럽게 나가고, 카메라도 뭔가 뭐 fov값 조절할 수 있으면 해서 실제로 움직이는것 처럼하고, 바퀴 굴러가게 해야함
+
+    void Update() {
+        camera.transform.position = vehicle.transform.position + new Vector3(0, 4.528f, -19);
+        float horizontal = moveobject.Horizontal;
+        float vertical = moveobject.Vertical;
+        if (vertical > 0)
+            currentSpeed += Time.deltaTime * 30;
+        else
+            currentSpeed -= Time.deltaTime * 10;
+        currentSpeed = Mathf.Clamp(currentSpeed, 0, 40);
+        vehicleRigidbody.MovePosition(vehicle.transform.position + vehicle.transform.forward * currentSpeed * Time.deltaTime);
+        if (horizontal != 0) {
+            Quaternion turnRotation = Quaternion.Euler(0f, horizontal * 40 * Time.deltaTime, 0f);
+            vehicleRigidbody.MoveRotation(vehicleRigidbody.rotation * turnRotation);
+        }
+    }
 }

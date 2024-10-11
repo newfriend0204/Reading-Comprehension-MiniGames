@@ -45,6 +45,11 @@ public class GameManagerGame1 : MonoBehaviour {
     public int problemIndex;
     private float angle = 0f;
 
+    void Awake()
+    {
+        Application.targetFrameRate = 60;
+    }
+
     public List<questionList> problemList = new List<questionList> {
         new questionList {question = "갑자기 창문을 벌컥 .", answer = "열어젖히다", example = new List<char>{ '제', '제', '혔', '혔', '쳤', '쳤'}},
         new questionList {question = "참의 반댓말은 이다.", answer = "거짓", example = new List<char>{ '참', '구', '잣', '가', '젓', '구' }},
