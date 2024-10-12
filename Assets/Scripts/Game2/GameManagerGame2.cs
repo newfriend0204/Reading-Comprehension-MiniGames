@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using TMPro.Examples;
 using UnityEngine;
 using UnityEngine.SocialPlatforms.Impl;
 
@@ -55,7 +56,7 @@ public class GameManagerGame2 : MonoBehaviour {
         }
 
         scoreTimer += Time.deltaTime;
-        if (scoreTimer >= 0.01f) {
+        if (scoreTimer >= 0.006f) {
             score -= 1;
             scoreTimer = 0f;
         }
@@ -64,14 +65,18 @@ public class GameManagerGame2 : MonoBehaviour {
         scoreText.text = "Á¡¼ö:" + score.ToString();
     }
 
-    void OnTriggerEnter(Collider other) {
-        if (other.CompareTag("Obstacle")) {
-            Vector3 pushDirection = (transform.position - other.transform.position).normalized;
-            other.transform.position += pushDirection * 100f;
-            score -= 500;
-        } else if (other.CompareTag("Coin")) {
-            score += 1000;
-            Destroy(other.gameObject);
+    public void Penalty() {
+        score -= 500;
+        StartCoroutine(ChangeScoreColor());
+    }
+
+    private IEnumerator ChangeScoreColor() {
+        Color originalColor = Color.white;
+        for (int i = 0; i < 3; i++) {
+            scoreText.color = Color.red;
+            yield return new WaitForSeconds(0.1f);
+            scoreText.color = Color.white;
+            yield return new WaitForSeconds(0.1f);
         }
     }
 
