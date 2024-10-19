@@ -1,9 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using TMPro.Examples;
 using UnityEngine;
 using UnityEngine.SocialPlatforms.Impl;
+
+public class questionListGame2 {
+    public string question { get; set; }
+    public string example1 { get; set; }
+    public string example2 { get; set; }
+    public int answer { get; set; }
+}
 
 public class GameManagerGame2 : MonoBehaviour {
     public GameObject vehicle;
@@ -13,6 +19,16 @@ public class GameManagerGame2 : MonoBehaviour {
     public TextMeshProUGUI scoreText;
     public Joystick moveobject;
     private Rigidbody vehicleRigidbody;
+    public TextMeshPro phase1select1Text;
+    public TextMeshPro phase1select2Text;
+    public TextMeshPro phase2select1Text;
+    public TextMeshPro phase2select2Text;
+    public TextMeshProUGUI problemText;
+    public int randomIndex1;
+    public int randomIndex2;
+    public int nowPhase = 1;
+    public int phase1Answer = 0;
+    public int phase2Answer = 0;
     private float currentSpeed = 0f;
     public int numberOfObstacles;
     public int numberOfCoins;
@@ -24,7 +40,25 @@ public class GameManagerGame2 : MonoBehaviour {
         vehicleRigidbody = vehicle.GetComponent<Rigidbody>();
     }
 
+    public List<questionListGame2> problemList = new List<questionListGame2> {
+        new questionListGame2 {question = "1번이 정답이야!", example1 = "1번", example2 = "2번", answer = 1},
+        new questionListGame2 {question = "2번이 정답이야!", example1 = "1번", example2 = "2번", answer = 2},
+        new questionListGame2 {question = "3번이 정답이야!", example1 = "3번", example2 = "4번", answer = 1},
+        new questionListGame2 {question = "4번이 정답이야!", example1 = "3번", example2 = "4번", answer = 2},
+        new questionListGame2 {question = "5번이 정답이야!", example1 = "5번", example2 = "6번", answer = 1},
+        new questionListGame2 {question = "6번이 정답이야!", example1 = "5번", example2 = "6번", answer = 2},
+    };
+
     private void Start() {
+        randomIndex1 = Random.Range(0, problemList.Count);
+        randomIndex2 = Random.Range(0, problemList.Count);
+        phase1Answer = problemList[randomIndex1].answer;
+        phase2Answer = problemList[randomIndex2].answer;
+        phase1select1Text.text = problemList[randomIndex1].example1;
+        phase1select2Text.text = problemList[randomIndex1].example2;
+        phase2select1Text.text = problemList[randomIndex2].example1;
+        phase2select2Text.text = problemList[randomIndex2].example2;
+
         for (int i = 0; i < numberOfObstacles; i++) {
             float randomX = Random.Range(-8.5f, 8.5f);
             float randomZ = Random.Range(-593f, 114f);
@@ -73,6 +107,13 @@ public class GameManagerGame2 : MonoBehaviour {
         if (score <= 0)
             score = 0;
         scoreText.text = "점수:" + score.ToString();
+        
+        if (nowPhase == 1) {
+            problemText.text = problemList[randomIndex1].question;
+        }
+        else if (nowPhase == 2) {
+            problemText.text = problemList[randomIndex2].question;
+        }
     }
 
     public void Penalty() {
