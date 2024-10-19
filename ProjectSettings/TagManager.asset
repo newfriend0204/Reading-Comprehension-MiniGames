@@ -6,6 +6,10 @@ TagManager:
   tags:
   - Coin
   - Obstacle
+  - Phase1Select1Trigger
+  - Phase1Select2Trigger
+  - Phase2Select1Trigger
+  - Phase2Select2Trigger
   layers:
   - Default
   - TransparentFX
