@@ -15,7 +15,8 @@ public class GameManagerMainMenu : MonoBehaviour
     private GameObject[] menus;
     public GameObject letterObject;
 
-    public void Awake() { 
+    public void Awake() {
+        Time.timeScale = 1;
         Application.targetFrameRate = 60;
         mainCamera.transform.position = new Vector3(-70.70401f, 5.37792f, -7.097689f);
         mainCamera.transform.rotation = Quaternion.Euler(6.395f, -285.846f, 0.013f);
