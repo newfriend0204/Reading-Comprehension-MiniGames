@@ -10,6 +10,7 @@ TagManager:
   - Phase1Select2Trigger
   - Phase2Select1Trigger
   - Phase2Select2Trigger
+  - Arch
   layers:
   - Default
   - TransparentFX

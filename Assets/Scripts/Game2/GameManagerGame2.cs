@@ -18,6 +18,7 @@ public class GameManagerGame2 : MonoBehaviour {
     public GameObject coinPrefab;
     public TextMeshProUGUI scoreText;
     public Joystick moveobject;
+    public AudioClip fallSound;
     private Rigidbody vehicleRigidbody;
     public TextMeshPro phase1select1Text;
     public TextMeshPro phase1select2Text;
@@ -41,12 +42,16 @@ public class GameManagerGame2 : MonoBehaviour {
     }
 
     public List<questionListGame2> problemList = new List<questionListGame2> {
-        new questionListGame2 {question = "1번이 정답이야!", example1 = "1번", example2 = "2번", answer = 1},
-        new questionListGame2 {question = "2번이 정답이야!", example1 = "1번", example2 = "2번", answer = 2},
-        new questionListGame2 {question = "3번이 정답이야!", example1 = "3번", example2 = "4번", answer = 1},
-        new questionListGame2 {question = "4번이 정답이야!", example1 = "3번", example2 = "4번", answer = 2},
-        new questionListGame2 {question = "5번이 정답이야!", example1 = "5번", example2 = "6번", answer = 1},
-        new questionListGame2 {question = "6번이 정답이야!", example1 = "5번", example2 = "6번", answer = 2},
+        new questionListGame2 {question = "일정한 기준에 따라 전체를 몇 개로 갈라 나누는 것", example1 = "구분", example2 = "구별", answer = 1},
+        new questionListGame2 {question = "성질이나 종류에 따라 차이가 나거나 갈라놓는 것", example1 = "구분", example2 = "구별", answer = 2},
+        new questionListGame2 {question = "평면이나 넓은 물체의 가로로 건너지른 거리", example1 = "너비", example2 = "넓이", answer = 1},
+        new questionListGame2 {question = "일정한 평면에 걸쳐 있는 공간이나 범위의 크기", example1 = "너비", example2 = "넓이", answer = 2},
+        new questionListGame2 {question = "기술, 경제, 책, 제품, 국토, 인력 등 물질적인 것을 발전시킴", example1 = "개발", example2 = "계발", answer = 1},
+        new questionListGame2 {question = "슬기나 재능, 사상 따위를 일깨워 줌", example1 = "개발", example2 = "계발", answer = 2},
+        new questionListGame2 {question = "사물을 형체 그대로 그리거나 원본을 베끼어 쓰는 것", example1 = "모사", example2 = "묘사", answer = 1},
+        new questionListGame2 {question = "어떤 대상이나 사물, 현상 따위를 언어로 서술하거나 그림을 그려서 표현하는 것", example1 = "모사", example2 = "묘사", answer = 2},
+        new questionListGame2 {question = "글이나 그림 따위를 신문이나 잡지 따위에 싣는 것", example1 = "게재", example2 = "기재", answer = 1},
+        new questionListGame2 {question = "문서 따위에 기록하여 올리는 것", example1 = "게재", example2 = "기재", answer = 2}
     };
 
     private void Start() {
@@ -80,23 +85,26 @@ public class GameManagerGame2 : MonoBehaviour {
         if (vehicle.transform.position.z < -619)
             vehicle.transform.position = new Vector3(vehicle.transform.position.x, vehicle.transform.position.y, -607);
         if (vehicle.transform.position.y > -152.11f && vehicle.transform.position.y < -148.11f) {
+            if (currentSpeed < 5)
+                currentSpeed = 5;
             float horizontal = moveobject.Horizontal;
             float vertical = moveobject.Vertical;
             if (vertical > 0)
                 currentSpeed += Time.deltaTime * 30;
             else
                 currentSpeed -= Time.deltaTime * 50;
-            currentSpeed = Mathf.Clamp(currentSpeed, 0, 40);
+            currentSpeed = Mathf.Clamp(currentSpeed, 0, 35);
             vehicleRigidbody.MovePosition(vehicle.transform.position + vehicle.transform.forward * currentSpeed * Time.deltaTime);
             if (horizontal != 0 && currentSpeed != 0) {
-                Quaternion turnRotation = Quaternion.Euler(0f, horizontal * 40 * Time.deltaTime, 0f);
+                Quaternion turnRotation = Quaternion.Euler(0f, horizontal * 35 * Time.deltaTime, 0f);
                 vehicleRigidbody.MoveRotation(vehicleRigidbody.rotation * turnRotation);
             }
         } else {
             Penalty();
+            GetComponent<AudioSource>().PlayOneShot(fallSound, 1f);
             vehicle.transform.position = new Vector3(0, -150.3f, vehicle.transform.position.z - 40);
             vehicle.transform.rotation = Quaternion.Euler(0, 0, 0);
-            currentSpeed = 0;
+            currentSpeed = 5;
         }
 
         scoreTimer += Time.deltaTime;
