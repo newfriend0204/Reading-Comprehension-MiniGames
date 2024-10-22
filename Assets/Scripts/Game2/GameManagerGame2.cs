@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.SocialPlatforms.Impl;
 
 public class questionListGame2 {
@@ -25,12 +27,17 @@ public class GameManagerGame2 : MonoBehaviour {
     public TextMeshPro phase2select1Text;
     public TextMeshPro phase2select2Text;
     public TextMeshProUGUI problemText;
+    public GameObject stageClear;
+    public TextMeshProUGUI stageClearPhase1Question;
+    public TextMeshProUGUI stageClearPhase1Answer;
+    public TextMeshProUGUI stageClearPhase2Question;
+    public TextMeshProUGUI stageClearPhase2Answer;
     public int randomIndex1;
     public int randomIndex2;
     public int nowPhase = 1;
     public int phase1Answer = 0;
     public int phase2Answer = 0;
-    private float currentSpeed = 0f;
+    public float currentSpeed = 0f;
     public int numberOfObstacles;
     public int numberOfCoins;
     public int score = 5000;
@@ -73,7 +80,7 @@ public class GameManagerGame2 : MonoBehaviour {
         }
         for (int i = 0; i < numberOfCoins; i++) {
             float randomX = Random.Range(-8.5f, 8.5f);
-            float randomZ = Random.Range(-593f, 114f);
+            float randomZ = Random.Range(-630f, 175f);
             GameObject coin = Instantiate(coinPrefab, new Vector3(randomX, -149.5f, randomZ), Quaternion.identity);
             coin.AddComponent<CoinRotation>();
         }
@@ -82,21 +89,21 @@ public class GameManagerGame2 : MonoBehaviour {
     void Update() {
         camera.transform.position = vehicle.transform.position + new Vector3(0, 4.528f, -19);
 
-        if (vehicle.transform.position.z < -619)
-            vehicle.transform.position = new Vector3(vehicle.transform.position.x, vehicle.transform.position.y, -607);
+        if (vehicle.transform.position.z < -670)
+            vehicle.transform.position = new Vector3(vehicle.transform.position.x, vehicle.transform.position.y, -662);
         if (vehicle.transform.position.y > -152.11f && vehicle.transform.position.y < -148.11f) {
-            if (currentSpeed < 5)
+            if (currentSpeed < 5 && nowPhase != 4)
                 currentSpeed = 5;
             float horizontal = moveobject.Horizontal;
             float vertical = moveobject.Vertical;
             if (vertical > 0)
-                currentSpeed += Time.deltaTime * 30;
+                currentSpeed += Time.deltaTime * 40;
             else
                 currentSpeed -= Time.deltaTime * 50;
-            currentSpeed = Mathf.Clamp(currentSpeed, 0, 35);
+            currentSpeed = Mathf.Clamp(currentSpeed, 0, 45);
             vehicleRigidbody.MovePosition(vehicle.transform.position + vehicle.transform.forward * currentSpeed * Time.deltaTime);
             if (horizontal != 0 && currentSpeed != 0) {
-                Quaternion turnRotation = Quaternion.Euler(0f, horizontal * 35 * Time.deltaTime, 0f);
+                Quaternion turnRotation = Quaternion.Euler(0f, horizontal * 45 * Time.deltaTime, 0f);
                 vehicleRigidbody.MoveRotation(vehicleRigidbody.rotation * turnRotation);
             }
         } else {
@@ -118,9 +125,10 @@ public class GameManagerGame2 : MonoBehaviour {
         
         if (nowPhase == 1) {
             problemText.text = problemList[randomIndex1].question;
-        }
-        else if (nowPhase == 2) {
+        } else if (nowPhase == 2) {
             problemText.text = problemList[randomIndex2].question;
+        } else if (nowPhase == 4) {
+            currentSpeed = 0;
         }
     }
 
@@ -143,5 +151,46 @@ public class GameManagerGame2 : MonoBehaviour {
         void Update() {
             transform.Rotate(Vector3.up, 100 * Time.deltaTime);
         }
+    }
+
+    public void StageClear() {
+        nowPhase = 4;
+        stageClear.SetActive(true);
+        stageClearPhase1Question.text = problemList[randomIndex1].question;
+        stageClearPhase2Question.text = problemList[randomIndex2].question;
+        if (problemList[randomIndex1].answer == 1)
+            stageClearPhase1Answer.text = "¡æ" + problemList[randomIndex1].example1;
+        else
+            stageClearPhase1Answer.text = "¡æ" + problemList[randomIndex1].example2;
+        if (problemList[randomIndex2].answer == 1)
+            stageClearPhase2Answer.text = "¡æ" + problemList[randomIndex2].example1;
+        else
+            stageClearPhase2Answer.text = "¡æ" + problemList[randomIndex2].example2;
+        StartCoroutine(MoveAnswer());
+    }
+
+    private IEnumerator MoveAnswer() {
+        yield return new WaitForSeconds(0.5f);
+        yield return MoveAnswerText(stageClearPhase1Answer);
+        yield return MoveAnswerText(stageClearPhase2Answer);
+    }
+
+    private IEnumerator MoveAnswerText(TextMeshProUGUI text) {
+        float elapsedTime = 0;
+        Vector3 startPosition = text.transform.localPosition;
+        while (elapsedTime < 0.5f) {
+            text.transform.localPosition = Vector3.Lerp(startPosition, new Vector3(-6, text.transform.localPosition.y, text.transform.localPosition.z), elapsedTime / 0.5f);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+        text.transform.localPosition = new Vector3(-6, text.transform.localPosition.y, text.transform.localPosition.z);
+    }
+
+    public void ReturnMainMenu() {
+        SceneManager.LoadScene("MainMenu");
+    }
+
+    public void RestartGame() {
+        SceneManager.LoadScene("Game2");
     }
 }

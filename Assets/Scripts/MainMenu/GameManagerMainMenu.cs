@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
 
@@ -12,6 +13,7 @@ public class GameManagerMainMenu : MonoBehaviour
     public GameObject game1Menu;
     public GameObject game2Menu;
     public GameObject game1Explain;
+    public GameObject game2Explain;
     private GameObject[] menus;
     public GameObject letterObject;
 
@@ -27,7 +29,6 @@ public class GameManagerMainMenu : MonoBehaviour
         while (true) {
             float spawnTime = Random.Range(0.2f, 0.7f);
             yield return new WaitForSeconds(spawnTime);
-            Vector3 cameraPosition = mainCamera.transform.position;
             float xMin = -34.35f;
             float xMax = -27.06f;
             float yMin = 1.36f;
@@ -58,6 +59,26 @@ public class GameManagerMainMenu : MonoBehaviour
         }
         mainCamera.transform.position = new Vector3(-22.99117f, 3.115955f, -66.24719f);
         mainCamera.transform.rotation = Quaternion.Euler(-2.68f, -389.117f, -0.005f);
+    }
+
+    public void MoveToGame2() {
+        nowMenu = 2;
+        StartCoroutine(MoveCameraToGame2());
+    }
+
+    private IEnumerator MoveCameraToGame2() {
+        float elapsedTime = 0f;
+        float duration = 0.4f;
+        Vector3 startingPosition = mainCamera.transform.position;
+        Quaternion startingRotation = mainCamera.transform.rotation;
+        while (elapsedTime < duration) {
+            mainCamera.transform.position = Vector3.Lerp(startingPosition, new Vector3(74.18389f, 9.732926f, 9.602714f), (elapsedTime / duration));
+            mainCamera.transform.rotation = Quaternion.Slerp(startingRotation, Quaternion.Euler(13.271f, -383.892f, 0.001f), (elapsedTime / duration));
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+        mainCamera.transform.position = new Vector3(74.18389f, 9.732926f, 9.602714f);
+        mainCamera.transform.rotation = Quaternion.Euler(13.271f, -383.892f, 0.001f);
     }
 
     public void MoveToMainMenu() {
@@ -101,5 +122,13 @@ public class GameManagerMainMenu : MonoBehaviour
 
     public void HideExpalnGame1() {
         game1Explain.gameObject.SetActive(false);
+    }
+
+    public void ShowExpalnGame2() {
+        game2Explain.gameObject.SetActive(true);
+    }
+
+    public void HideExpalnGame2() {
+        game2Explain.gameObject.SetActive(false);
     }
 }

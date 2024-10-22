@@ -33,12 +33,13 @@ public class CarController : MonoBehaviour {
             gameManager.score += 500;
             Destroy(collision.gameObject);
             GetComponent<AudioSource>().PlayOneShot(getCoinSound, 1f);
-        }
-        if (collision.gameObject.CompareTag("Arch")) {
+        } else if (collision.gameObject.CompareTag("Arch")) {
             gameManager.Penalty();
             transform.position = new Vector3(0, -150.3f, transform.position.z - 40);
             transform.rotation = Quaternion.Euler(0, 0, 0);
             GetComponent<AudioSource>().PlayOneShot(fallSound, 1f);
+        } else if (collision.gameObject.CompareTag("End")) {
+            gameManager.StageClear();
         }
     }
 
@@ -96,7 +97,7 @@ public class CarController : MonoBehaviour {
     private IEnumerator Wrong() {
         resultText.text = "¿À´ä";
         gameManager.score -= 1000;
-        GetComponent<AudioSource>().PlayOneShot(explosionSound, 0.8f);
+        GetComponent<AudioSource>().PlayOneShot(fallSound, 1f);
         for (int i = 0; i < 3; i++) {
             resultText.alpha = 0f;
             yield return new WaitForSeconds(0.3f);

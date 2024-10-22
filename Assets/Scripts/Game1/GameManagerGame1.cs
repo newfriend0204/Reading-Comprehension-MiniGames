@@ -432,4 +432,8 @@ public class GameManagerGame1 : MonoBehaviour {
         Time.timeScale = 1;
         SceneManager.LoadScene("MainMenu");
     }
+
+    public void RestartGame() {
+        SceneManager.LoadScene("Game1");
+    }
 }
