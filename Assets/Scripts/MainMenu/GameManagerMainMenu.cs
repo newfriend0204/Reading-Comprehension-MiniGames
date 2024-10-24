@@ -36,8 +36,8 @@ public class GameManagerMainMenu : MonoBehaviour
         road1.transform.position = new Vector3(64.55737f, 0.8699951f, 36.693f);
         road2.transform.position = new Vector3(27.8f, 0.8699951f, 87.7f);
         explosionParticle.transform.position = new Vector3(68.55f, 0.8699961f, 31.05f);
-        GameObject title1 = Instantiate(titleText1, new Vector3(-34.94f, 5.429993f, -53.014f), Quaternion.Euler(5.433f, -63.495f, -0.001f));
-        GameObject title2 = Instantiate(titleText2, new Vector3(71.91998f, 9.960022f, 12.86298f), Quaternion.Euler(29.497f, -54.144f, 0));
+        GameObject title1 = Instantiate(titleText1, new Vector3(-34.94f, 5.1f, -52.27f), Quaternion.Euler(5.433f, -63.495f, -0.001f));
+        GameObject title2 = Instantiate(titleText2, new Vector3(71.962f, 9.729f, 12.894f), Quaternion.Euler(29.497f, -54.144f, 0));
     }
 
     private IEnumerator SpawnObjectCoroutine() {

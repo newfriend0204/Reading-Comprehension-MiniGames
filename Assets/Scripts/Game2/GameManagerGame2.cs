@@ -28,10 +28,12 @@ public class GameManagerGame2 : MonoBehaviour {
     public TextMeshPro phase2select2Text;
     public TextMeshProUGUI problemText;
     public GameObject stageClear;
+    public GameObject portal;
     public TextMeshProUGUI stageClearPhase1Question;
     public TextMeshProUGUI stageClearPhase1Answer;
     public TextMeshProUGUI stageClearPhase2Question;
     public TextMeshProUGUI stageClearPhase2Answer;
+    public TextMeshProUGUI stageClearScore;
     public int randomIndex1;
     public int randomIndex2;
     public int nowPhase = 1;
@@ -44,6 +46,7 @@ public class GameManagerGame2 : MonoBehaviour {
     private float scoreTimer = 0f;
 
     void Awake() {
+        Time.timeScale = 1;
         Application.targetFrameRate = 60;
         vehicleRigidbody = vehicle.GetComponent<Rigidbody>();
     }
@@ -84,6 +87,8 @@ public class GameManagerGame2 : MonoBehaviour {
             GameObject coin = Instantiate(coinPrefab, new Vector3(randomX, -149.5f, randomZ), Quaternion.identity);
             coin.AddComponent<CoinRotation>();
         }
+        if (Time.timeScale == 0)
+            Time.timeScale = 1;
     }
 
     void Update() {
@@ -115,7 +120,7 @@ public class GameManagerGame2 : MonoBehaviour {
         }
 
         scoreTimer += Time.deltaTime;
-        if (scoreTimer >= 0.003f) {
+        if (scoreTimer >= 0.003f && nowPhase != 4) {
             score -= 1;
             scoreTimer = 0f;
         }
@@ -130,6 +135,8 @@ public class GameManagerGame2 : MonoBehaviour {
         } else if (nowPhase == 4) {
             currentSpeed = 0;
         }
+
+        portal.transform.Rotate(0, 0, 100 * Time.deltaTime);
     }
 
     public void Penalty() {
@@ -158,6 +165,7 @@ public class GameManagerGame2 : MonoBehaviour {
         stageClear.SetActive(true);
         stageClearPhase1Question.text = problemList[randomIndex1].question;
         stageClearPhase2Question.text = problemList[randomIndex2].question;
+        stageClearScore.text = "얻은점수: " + score.ToString();
         if (problemList[randomIndex1].answer == 1)
             stageClearPhase1Answer.text = "→" + problemList[randomIndex1].example1;
         else

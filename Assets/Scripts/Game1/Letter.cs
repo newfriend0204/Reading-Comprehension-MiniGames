@@ -25,7 +25,7 @@ public class Letter : MonoBehaviour {
         List<char> options = new List<char>();
         options.AddRange(gameManager.problemList[gameManager.problemIndex].example);
         char[] answer = gameManager.answer.ToCharArray();
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < 2; i++)
             options.AddRange(answer);
         char selectedChar = options[Random.Range(0, options.Count)];
         displayText.text = "" + selectedChar;

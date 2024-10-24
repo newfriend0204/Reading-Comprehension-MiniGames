@@ -47,6 +47,7 @@ public class GameManagerGame1 : MonoBehaviour {
     private float angle = 0f;
 
     void Awake() {
+        Time.timeScale = 1;
         Application.targetFrameRate = 60;
     }
 
@@ -122,7 +123,6 @@ public class GameManagerGame1 : MonoBehaviour {
         new questionListGame1 {question = "여름에는  물을 많이 마신다.", answer = "시원한", example = new List<char>{'무', '거', '운'}},
         new questionListGame1 {question = "우리는 해변에서  시간을 보냈다.", answer = "행복한", example = new List<char>{'좁', '은'}},
         new questionListGame1 {question = "수업 시간에는  집중해야 한다.", answer = "깊이", example = new List<char>{'멀', '리'}},
-        new questionListGame1 {question = "그는  걷는 것을 좋아한다.", answer = "천천히", example = new List<char>{'날', '카', '롭', '게'}},
         new questionListGame1 {question = "우리는  준비를 마쳤다.", answer = "철저한", example = new List<char>{'부', '드', '럽', '게'}},
         new questionListGame1 {question = "날씨가 흐리면 을 잊지 마세요.", answer = "우산", example = new List<char>{'선', '풍', '기'}},
         new questionListGame1 {question = "친구와 함께 에 갔다.", answer = "커피숍", example = new List<char>{'정', '원'}},
@@ -280,6 +280,9 @@ public class GameManagerGame1 : MonoBehaviour {
 
         mainCamera = Camera.main;
         StartCoroutine(SpawnObjectCoroutine());
+
+        if (Time.timeScale == 0)
+            Time.timeScale = 1;
     }
 
     private IEnumerator SpawnObjectCoroutine() {
@@ -434,6 +437,7 @@ public class GameManagerGame1 : MonoBehaviour {
     }
 
     public void RestartGame() {
+        Time.timeScale = 1;
         SceneManager.LoadScene("Game1");
     }
 }
