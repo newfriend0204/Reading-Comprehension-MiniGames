@@ -11,6 +11,7 @@ public class CarController : MonoBehaviour {
     public AudioClip getCoinSound;
     public AudioClip fallSound;
     public TextMeshProUGUI resultText;
+    public TextMeshProUGUI problemText;
 
     void OnCollisionEnter(Collision collision) {
         if (collision.gameObject.CompareTag("Obstacle")) {
@@ -61,16 +62,16 @@ public class CarController : MonoBehaviour {
         }
         if (other.gameObject.CompareTag("Phase2Select1Trigger") && gameManager.nowPhase == 2) {
             gameManager.nowPhase = 3;
-            if (gameManager.phase1Answer == 1)
+            if (gameManager.phase2Answer == 1)
                 StartCoroutine(Correct());
-            if (gameManager.phase1Answer == 2)
+            if (gameManager.phase2Answer == 2)
                 StartCoroutine(Wrong());
         }
         if (other.gameObject.CompareTag("Phase2Select2Trigger") && gameManager.nowPhase == 2) {
             gameManager.nowPhase = 3;
-            if (gameManager.phase1Answer == 2)
+            if (gameManager.phase2Answer == 2)
                 StartCoroutine(Correct());
-            if (gameManager.phase1Answer == 1)
+            if (gameManager.phase2Answer == 1)
                 StartCoroutine(Wrong());
         }
     }
@@ -82,13 +83,16 @@ public class CarController : MonoBehaviour {
 
     private IEnumerator Correct() {
         resultText.text = "정답!";
+        problemText.text = "다음 문제 출제 중...";
+        if (gameManager.nowPhase == 3)
+            problemText.text = "완주하십시오.";
         gameManager.score += 1000;
         GetComponent<AudioSource>().PlayOneShot(getCoinSound, 1f);
         for (int i = 0; i < 3; i++) {
             resultText.alpha = 0f;
-            yield return new WaitForSeconds(0.3f);
+            yield return new WaitForSeconds(0.25f);
             resultText.alpha = 1f;
-            yield return new WaitForSeconds(0.3f);
+            yield return new WaitForSeconds(0.25f);
         }
         resultText.alpha = 0f;
         StartCoroutine(NextProblem());
@@ -96,29 +100,36 @@ public class CarController : MonoBehaviour {
 
     private IEnumerator Wrong() {
         resultText.text = "오답";
+        problemText.text = "다음 문제 출제 중...";
+        if (gameManager.nowPhase == 3)
+            problemText.text = "완주하십시오.";
         gameManager.score -= 1000;
         GetComponent<AudioSource>().PlayOneShot(fallSound, 1f);
         for (int i = 0; i < 3; i++) {
             resultText.alpha = 0f;
-            yield return new WaitForSeconds(0.3f);
+            yield return new WaitForSeconds(0.25f);
             resultText.alpha = 1f;
-            yield return new WaitForSeconds(0.3f);
+            yield return new WaitForSeconds(0.25f);
         }
         resultText.alpha = 0f;
         StartCoroutine(NextProblem());
     }
 
     private IEnumerator NextProblem() {
-        if (gameManager.nowPhase == 3)
-            yield break;
         resultText.text = "다음 문제";
-        GetComponent<AudioSource>().PlayOneShot(getCoinSound, 1f);
+        if (gameManager.nowPhase == 3) {
+            resultText.text = "완주하십시오.";
+            problemText.text = "완주하십시오.";
+        }
+            GetComponent<AudioSource>().PlayOneShot(getCoinSound, 1f);
         for (int i = 0; i < 3; i++) {
             resultText.alpha = 0f;
-            yield return new WaitForSeconds(0.3f);
+            yield return new WaitForSeconds(0.25f);
             resultText.alpha = 1f;
-            yield return new WaitForSeconds(0.3f);
+            yield return new WaitForSeconds(0.25f);
         }
         resultText.alpha = 0f;
+        if (gameManager.nowPhase == 2)
+            problemText.text = gameManager.problemList[gameManager.randomIndex2].question;
     }
 }

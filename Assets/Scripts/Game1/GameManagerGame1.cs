@@ -34,6 +34,7 @@ public class GameManagerGame1 : MonoBehaviour {
     public TextMeshProUGUI hintItemText;
     public TextMeshProUGUI showScore;
     public Image hintItemImage;
+    public Image fadeBackground;
     public GameObject stageClear;
     public TextMeshProUGUI stageClearExplain;
     public TextMeshProUGUI stageClearScore;
@@ -107,7 +108,7 @@ public class GameManagerGame1 : MonoBehaviour {
         new questionListGame1 {question = "아이들은 공원에서  뛰어놀았다.", answer = "즐겁게", example = new List<char>{'무', '겁', '게'}},
         new questionListGame1 {question = "바쁜 날에는  식사를 한다.", answer = "간단한", example = new List<char>{'깨', '끗', '한'}},
         new questionListGame1 {question = "그녀는 꽃을  가꾸는 것을 좋아한다.", answer = "정성껏", example = new List<char>{'아', '프', '게'}},
-        new questionListGame1 {question = "요즘에는  옷을 많이 입는다.", answer = "편한", example = new List<char>{'달', '콤', '한'}},
+        new questionListGame1 {question = "요즘에는  옷을 많이 입는다.", answer = "편한", example = new List<char>{'달', '콤', '한'}},
         new questionListGame1 {question = "그는 매일  운동을 한다.", answer = "꾸준히", example = new List<char>{'차', '갑', '게'}},
         new questionListGame1 {question = "학교에서는  공부해야 한다.", answer = "열심히", example = new List<char>{'서', '늘', '하', '게'}},
         new questionListGame1 {question = "주말에는  쉬고 싶다.", answer = "푹", example = new List<char>{'따', '뜻', '하', '게'}},
@@ -152,7 +153,7 @@ public class GameManagerGame1 : MonoBehaviour {
         new questionListGame1 {question = "온실가스의 은 지구온난화를 가속화한다.", answer = "배출", example = new List<char>{'상', '추'}},
         new questionListGame1 {question = "기온 상승은 생태계에 한 영향을 미친다.", answer = "영향", example = new List<char>{'양', '화'}},
         new questionListGame1 {question = "생물 다양성 감소는 생태계의 을 초래한다.", answer = "불안정", example = new List<char>{'해', '수', '면'}},
-        new questionListGame1 {question = "지구온난화는 농업 생산성에 한 영향을 미친다.", answer = "부정적", example = new List<char>{'해', '지', '운'}},
+        new questionListGame1 {question = "지구온난화는 농업 생산성에 인 영향을 미친다.", answer = "부정적", example = new List<char>{'해', '지', '운'}},
         new questionListGame1 {question = "지구온난화는 인 기후 현상을 증가시킨다.", answer = "극단적", example = new List<char>{'심', '노', '한'}},
         new questionListGame1 {question = "국제 협력은 지구온난화 해결에 이다.", answer = "필수", example = new List<char>{'중', '요', '학'}},
         new questionListGame1 {question = "개인의 노력도 지구온난화 완화에 한 역할을 한다.", answer = "역할", example = new List<char>{'지', '여'}},
@@ -192,7 +193,7 @@ public class GameManagerGame1 : MonoBehaviour {
         new questionListGame1 {question = "교육의 는 개인의 성장에 크게 기여한다.", answer = "가치", example = new List<char>{'같', '이'}},
         new questionListGame1 {question = "상상의 는 무한한 가능성을 제공한다.", answer = "세계", example = new List<char>{'네', '개'}},
         new questionListGame1 {question = "기술의 은 우리의 삶을 변화시키고 있다.", answer = "응용", example = new List<char>{'아', '니'}},
-        new questionListGame1 {question = "인간의 은 문제 해결의 열쇠가 된다.", answer = "창의성", example = new List<char>{'신', '비', '적'}},
+        new questionListGame1 {question = "인간의 은 문제 해결의 열쇠가 된다.", answer = "창의성", example = new List<char>{'신', '비', '적'}},
         new questionListGame1 {question = "스포츠의 은 도전과 협력에 있다.", answer = "정신", example = new List<char>{'장', '실'}},
         new questionListGame1 {question = "인생의 은 끊임없는 배움의 연속이다.", answer = "여정", example = new List<char>{'배', '울'}},
         new questionListGame1 {question = "아침 이 창문을 통해 방 안을 가득 채운다.", answer = "햇살", example = new List<char>{'해', '쌀'}},
@@ -203,7 +204,7 @@ public class GameManagerGame1 : MonoBehaviour {
         new questionListGame1 {question = "커피 한 잔의 가 하루를 시작하는 힘이 된다.", answer = "여유", example = new List<char>{'분', '주'}},
         new questionListGame1 {question = "생각하는 과정은 창의력을 발휘할 수 있는 좋은 다.", answer = "기회", example = new List<char>{'가', '휘'}},
         new questionListGame1 {question = "은 감정을 표현하는 가장 아름다운 방법 중 하나다.", answer = "음악", example = new List<char>{'으', '막'}},
-        new questionListGame1 {question = "길을 걷다 보면 예상치 못한 을 발견하기도 한다.", answer = "즐거움", example = new List<char>{'즈', '걸', '몽'}},
+        new questionListGame1 {question = "길을 걷다 보면 예상치 못한 을 발견하기도 한다.", answer = "즐거움", example = new List<char>{'즈', '걸', '몽'}},
         new questionListGame1 {question = "작은 일에도 하는 마음을 잊지 않으려 한다.", answer = "감사", example = new List<char>{'걈', '샹'}},
         new questionListGame1 {question = "가족과의 소중한 은 무엇보다 가치가 있다.", answer = "시간", example = new List<char>{'인', '물'}},
         new questionListGame1 {question = "새로운 를 시작하는 것은 항상 설레는 일이다.", answer = "취미", example = new List<char>{'특', '기'}},
@@ -226,7 +227,7 @@ public class GameManagerGame1 : MonoBehaviour {
         new questionListGame1 {question = "친구가 생일이라서 특별한 를 준비했다.", answer = "선물", example = new List<char>{'성', '줄'}},
         new questionListGame1 {question = "새로운 로 그림 그리기를 시작했다.", answer = "취미", example = new List<char>{'추', '모'}},
         new questionListGame1 {question = "매일 조금씩 를 공부하고 있다.", answer = "영어", example = new List<char>{'공', '부'}},
-        new questionListGame1 {question = "주말마다 를 타며 자연을 만끽한다.", answer = "자전거", example = new List<char>{'장', '작', '불'}},
+        new questionListGame1 {question = "주말마다 를 타며 자연을 만끽한다.", answer = "자전거", example = new List<char>{'장', '작', '불'}},
         new questionListGame1 {question = "하는 것이 스트레스를 푸는 데 도움이 된다.", answer = "요리", example = new List<char>{'욜', '이'}},
         new questionListGame1 {question = "카페에서 좋아하는 을 들으며 시간을 보냈다.", answer = "음악", example = new List<char>{'으', '막'}},
         new questionListGame1 {question = "매일 저녁 을 하며 생각을 정리한다.", answer = "산책", example = new List<char>{'상', '췤'}},
@@ -245,7 +246,7 @@ public class GameManagerGame1 : MonoBehaviour {
         new questionListGame1 {question = "아침에 일어나서 시원한 를 마셨다.", answer = "공기", example = new List<char>{'바', '람'}},
         new questionListGame1 {question = "와 함께 영화를 보러 갔다.", answer = "친구", example = new List<char>{'치', '누'}},
         new questionListGame1 {question = "주말에는 항상 를 하며 시간을 보낸다.", answer = "독서", example = new List<char>{'도', '거'}},
-        new questionListGame1 {question = "오늘 저녁에는 를 요리할 예정이다.", answer = "스파게티", example = new List<char>{'습', '하', '겠', '디'}},
+        new questionListGame1 {question = "오늘 저녁에는 를 요리할 예정이다.", answer = "스파게티", example = new List<char>{'습', '하', '겠', '디'}},
         new questionListGame1 {question = "바람이 불어 기분이 했다.", answer = "상쾌", example = new List<char>{'사', '괘'}},
         new questionListGame1 {question = " 준비를 하느라 바쁜 하루였다.", answer = "여행", example = new List<char>{'어', '항'}},
         new questionListGame1 {question = "자연 속에서 하는 것이 정말 좋다.", answer = "산책", example = new List<char>{'사', '췤'}},
@@ -260,12 +261,13 @@ public class GameManagerGame1 : MonoBehaviour {
         new questionListGame1 {question = "다양한 을 시도해보는 것이 즐겁다.", answer = "음식", example = new List<char>{'죽', '음'}},
         new questionListGame1 {question = "저녁에 을 보며 소원을 빌었다.", answer = "별", example = new List<char>{'런'}},
         new questionListGame1 {question = "새로운 을 찾아 듣는 것이 취미다.", answer = "음악", example = new List<char>{'으', '막'}},
-        new questionListGame1 {question = "주말마다 를 하기로 결정했다.", answer = "자원봉사", example = new List<char>{'지', '위', '보', '상'}},
+        new questionListGame1 {question = "주말마다 를 하기로 결정했다.", answer = "자원봉사", example = new List<char>{'지', '위', '보', '상'}},
         new questionListGame1 {question = "그녀는 다양한 을 좋아한다.", answer = "스포츠", example = new List<char>{ '미', '래'}}
     };
 
 
     private void Start() {
+        StartCoroutine(FadeOut());
         TextMeshProUGUI[] answerLetters = new TextMeshProUGUI[] { answerLetter1, answerLetter2, answerLetter3, answerLetter4, answerLetter5, answerLetter6 };
         problemIndex = Random.Range(0, problemList.Count);
         question = problemList[problemIndex].question;
@@ -433,11 +435,49 @@ public class GameManagerGame1 : MonoBehaviour {
 
     public void ReturnMainMenu() {
         Time.timeScale = 1;
-        SceneManager.LoadScene("MainMenu");
+        StartCoroutine(FadeIn(1));
     }
 
     public void RestartGame() {
         Time.timeScale = 1;
-        SceneManager.LoadScene("Game1");
+        StartCoroutine(FadeIn(2));
+    }
+
+    private IEnumerator FadeOut() {
+        Color color = fadeBackground.color;
+        color.a = 1;
+        fadeBackground.color = color;
+        float elapsedTime = 0f;
+
+        while (elapsedTime < 0.7f) {
+            color.a = Mathf.Lerp(1, 0, elapsedTime / 0.7f);
+            fadeBackground.color = color;
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+        color.a = 0;
+        fadeBackground.color = color;
+        fadeBackground.gameObject.SetActive(false);
+    }
+
+    private IEnumerator FadeIn(int check) {
+        fadeBackground.gameObject.SetActive(true);
+        Color color = fadeBackground.color;
+        color.a = 0;
+        fadeBackground.color = color;
+        float elapsedTime = 0f;
+
+        while (elapsedTime < 0.7f) {
+            color.a = Mathf.Lerp(0, 1, elapsedTime / 0.7f);
+            fadeBackground.color = color;
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+        color.a = 1;
+        fadeBackground.color = color;
+        if (check == 1)
+            SceneManager.LoadScene("MainMenu");
+        else if (check == 2)
+            SceneManager.LoadScene("Game1");
     }
 }

@@ -22,6 +22,7 @@ public class GameManagerMainMenu : MonoBehaviour
     public GameObject titleText2;
     private GameObject[] menus;
     public GameObject letterObject;
+    public Image fadeBackground;
 
     public void Awake() {
         Time.timeScale = 1;
@@ -32,6 +33,7 @@ public class GameManagerMainMenu : MonoBehaviour
     }
 
     private void Start() {
+        StartCoroutine(FadeOut());
         vehicle.transform.position = new Vector3(70.42f, 0.8699951f, 28.56f);
         road1.transform.position = new Vector3(64.55737f, 0.8699951f, 36.693f);
         road2.transform.position = new Vector3(27.8f, 0.8699951f, 87.7f);
@@ -124,11 +126,11 @@ public class GameManagerMainMenu : MonoBehaviour
     }
 
     public void StartGame1() {
-        SceneManager.LoadScene("Game1");
+        StartCoroutine(FadeIn(1));
     }
 
     public void StartGame2() {
-        SceneManager.LoadScene("Game2");
+        StartCoroutine(FadeIn(2));
     }
 
     public void ShowExpalnGame1() {
@@ -145,5 +147,43 @@ public class GameManagerMainMenu : MonoBehaviour
 
     public void HideExpalnGame2() {
         game2Explain.gameObject.SetActive(false);
+    }
+
+    private IEnumerator FadeOut() {
+        Color color = fadeBackground.color;
+        color.a = 1;
+        fadeBackground.color = color;
+        float elapsedTime = 0f;
+
+        while (elapsedTime < 0.7f) {
+            color.a = Mathf.Lerp(1, 0, elapsedTime / 0.7f);
+            fadeBackground.color = color;
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+        color.a = 0;
+        fadeBackground.color = color;
+        fadeBackground.gameObject.SetActive(false);
+    }
+
+    private IEnumerator FadeIn(int check) {
+        fadeBackground.gameObject.SetActive(true);
+        Color color = fadeBackground.color;
+        color.a = 0;
+        fadeBackground.color = color;
+        float elapsedTime = 0f;
+
+        while (elapsedTime < 0.7f) {
+            color.a = Mathf.Lerp(0, 1, elapsedTime / 0.7f);
+            fadeBackground.color = color;
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+        color.a = 1;
+        fadeBackground.color = color;
+        if (check == 1)
+            SceneManager.LoadScene("Game1");
+        else if (check == 2)
+            SceneManager.LoadScene("Game2");
     }
 }
