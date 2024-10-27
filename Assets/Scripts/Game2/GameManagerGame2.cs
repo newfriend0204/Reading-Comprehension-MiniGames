@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.SocialPlatforms.Impl;
+using static GameManagerGame2;
 
 public class questionListGame2 {
     public string question { get; set; }
@@ -22,6 +23,7 @@ public class GameManagerGame2 : MonoBehaviour {
     public TextMeshProUGUI scoreText;
     public Joystick moveobject;
     public AudioClip fallSound;
+    public AudioSource exhaustAudioSource;
     private Rigidbody vehicleRigidbody;
     public TextMeshPro phase1select1Text;
     public TextMeshPro phase1select2Text;
@@ -36,6 +38,7 @@ public class GameManagerGame2 : MonoBehaviour {
     public TextMeshProUGUI stageClearPhase2Question;
     public TextMeshProUGUI stageClearPhase2Answer;
     public TextMeshProUGUI stageClearScore;
+    public RectTransform dashboardPin;
     public int randomIndex1;
     public int randomIndex2;
     public int nowPhase = 1;
@@ -46,6 +49,7 @@ public class GameManagerGame2 : MonoBehaviour {
     public int numberOfCoins;
     public int score = 5000;
     private float scoreTimer = 0f;
+    private FileManager fileManager;
 
     void Awake() {
         Time.timeScale = 1;
@@ -161,7 +165,6 @@ public class GameManagerGame2 : MonoBehaviour {
         new questionListGame2 {question = "기존의 구조나 형태를 새롭게 변화시키는 것.", example1 = "재구성", example2 = "재편성"},
         new questionListGame2 {question = "여러 개체가 함께 일하거나 노력하는 과정.", example1 = "협력", example2 = "협동"},
         new questionListGame2 {question = "어떤 일이 반드시 일어나게 되는 이유나 상황.", example1 = "필연", example2 = "불가피"},
-        new questionListGame2 {question = "미래에 대한 예측이나 기대.", example1 = "전망", example2 = "전망"},
         new questionListGame2 {question = "특정 목표나 목적을 달성하기 위해 보탬이 되는 것.", example1 = "기여", example2 = "공헌"},
         new questionListGame2 {question = "어떤 사실이나 개념을 정확히 이해하는 과정.", example1 = "파악", example2 = "이해"},
         new questionListGame2 {question = "특정 상황에 적절하게 반응하거나 행동하는 것.", example1 = "대응", example2 = "반응"},
@@ -233,6 +236,7 @@ public class GameManagerGame2 : MonoBehaviour {
     };
 
     private void Start() {
+        fileManager = new FileManager();
         StartCoroutine(FadeOut());
         randomIndex1 = Random.Range(0, problemList.Count);
         randomIndex2 = Random.Range(0, problemList.Count);
@@ -272,11 +276,16 @@ public class GameManagerGame2 : MonoBehaviour {
         }
         if (Time.timeScale == 0)
             Time.timeScale = 1;
+        exhaustAudioSource.loop = true;
+        exhaustAudioSource.Play();
     }
 
     void Update() {
-        float t = Mathf.InverseLerp(5, 40, currentSpeed);
-        mainCamera.fieldOfView = Mathf.Lerp(50, 65, t);
+        float t = Mathf.InverseLerp(5, 45, currentSpeed);
+        mainCamera.fieldOfView = Mathf.Lerp(50, 70, t);
+
+        float normalizedSpeed = Mathf.Clamp01((currentSpeed - 5f) / (45f - 5f));
+        exhaustAudioSource.pitch = Mathf.Lerp(0.5f, 1f, normalizedSpeed);
 
         camera.transform.position = vehicle.transform.position + new Vector3(0, 4.528f, -19);
 
@@ -318,6 +327,12 @@ public class GameManagerGame2 : MonoBehaviour {
             currentSpeed = 0;
 
         portal.transform.Rotate(0, 0, 100 * Time.deltaTime);
+
+        float imagenormalizedSpeed = (currentSpeed - 5f) / (45f - 5f);
+        float targetRotationZ = Mathf.Lerp(132.482f, -42.458f, imagenormalizedSpeed);
+        float shake = Mathf.Sin(Time.time * 0.5f) * 10f;
+        float finalRotationZ = targetRotationZ + shake;
+        dashboardPin.localEulerAngles = new Vector3(0, 0, finalRotationZ + Random.Range(-7f, 7f));
     }
 
     public void Penalty() {
@@ -401,6 +416,7 @@ public class GameManagerGame2 : MonoBehaviour {
     }
 
     private IEnumerator FadeIn(int check) {
+        fileManager.AddData(score, 0);
         fadeBackground.gameObject.SetActive(true);
         Color color = fadeBackground.color;
         color.a = 0;

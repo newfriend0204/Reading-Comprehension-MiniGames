@@ -23,6 +23,9 @@ public class GameManagerMainMenu : MonoBehaviour
     private GameObject[] menus;
     public GameObject letterObject;
     public Image fadeBackground;
+    public TextMeshProUGUI scoreText;
+    private int score = 0;
+    private FileManager fileManager;
 
     public void Awake() {
         Time.timeScale = 1;
@@ -40,6 +43,8 @@ public class GameManagerMainMenu : MonoBehaviour
         explosionParticle.transform.position = new Vector3(68.55f, 0.8699961f, 31.05f);
         GameObject title1 = Instantiate(titleText1, new Vector3(-34.94f, 5.1f, -52.27f), Quaternion.Euler(5.433f, -63.495f, -0.001f));
         GameObject title2 = Instantiate(titleText2, new Vector3(71.962f, 9.729f, 12.894f), Quaternion.Euler(29.497f, -54.144f, 0));
+        fileManager = new FileManager();
+        score = fileManager.LoadData(0);
     }
 
     private IEnumerator SpawnObjectCoroutine() {
@@ -123,6 +128,8 @@ public class GameManagerMainMenu : MonoBehaviour
         for (int i = 0; i < menus.Length; i++) {
             menus[i].SetActive(i == nowMenu);
         }
+
+        scoreText.text = "Á¡¼ö: " + score.ToString();
     }
 
     public void StartGame1() {

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
@@ -46,9 +47,10 @@ public class GameManagerGame1 : MonoBehaviour {
     public string answer;
     public int problemIndex;
     private float angle = 0f;
+    private int isGaming = 1;
+    private FileManager fileManager;
 
     void Awake() {
-        Time.timeScale = 1;
         Application.targetFrameRate = 60;
     }
 
@@ -267,6 +269,7 @@ public class GameManagerGame1 : MonoBehaviour {
 
 
     private void Start() {
+        fileManager = new FileManager();
         StartCoroutine(FadeOut());
         TextMeshProUGUI[] answerLetters = new TextMeshProUGUI[] { answerLetter1, answerLetter2, answerLetter3, answerLetter4, answerLetter5, answerLetter6 };
         problemIndex = Random.Range(0, problemList.Count);
@@ -282,9 +285,6 @@ public class GameManagerGame1 : MonoBehaviour {
 
         mainCamera = Camera.main;
         StartCoroutine(SpawnObjectCoroutine());
-
-        if (Time.timeScale == 0)
-            Time.timeScale = 1;
     }
 
     private IEnumerator SpawnObjectCoroutine() {
@@ -316,7 +316,6 @@ public class GameManagerGame1 : MonoBehaviour {
 
         if (answerCheck.All(c => c == '1')) {
             StageClear();
-            Time.timeScale = 0;
         }
 
         int answerCurrentPosition = answerCheck.IndexOf('0');
@@ -327,7 +326,7 @@ public class GameManagerGame1 : MonoBehaviour {
         }
 
         scoreTimer += Time.deltaTime;
-        if (scoreTimer >= 0.002f) {
+        if (scoreTimer >= 0.002f && isGaming == 1) {
             score -= 1;
             scoreTimer = 0f;
         }
@@ -427,6 +426,7 @@ public class GameManagerGame1 : MonoBehaviour {
     }
 
     public void StageClear() {
+        isGaming = 0;
         stageClear.SetActive(true);
         stageClearScore.text = "얻은 점수: " + score.ToString();
         int placeholderCount = question.Count(c => c == '');
@@ -434,12 +434,10 @@ public class GameManagerGame1 : MonoBehaviour {
     }
 
     public void ReturnMainMenu() {
-        Time.timeScale = 1;
         StartCoroutine(FadeIn(1));
     }
 
     public void RestartGame() {
-        Time.timeScale = 1;
         StartCoroutine(FadeIn(2));
     }
 
@@ -461,6 +459,7 @@ public class GameManagerGame1 : MonoBehaviour {
     }
 
     private IEnumerator FadeIn(int check) {
+        fileManager.AddData(score, 0);
         fadeBackground.gameObject.SetActive(true);
         Color color = fadeBackground.color;
         color.a = 0;
