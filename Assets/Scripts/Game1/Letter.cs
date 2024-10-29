@@ -11,13 +11,15 @@ public class Letter : MonoBehaviour {
     public GameObject hp2Image;
     public GameObject hp3Image;
     public GameObject hp4Image;
+    public GameObject hp5Image;
+    public GameObject hp6Image;
     public AudioSource letterPieceBreak;
     public AudioSource letterPieceClick;
     private bool isFading = false;
     public int hp;
     private float angle = 0f;
     private int movementType; // 1: y축으로만 상승, 2: 시계방향 회전, 3: 반시계방향 회전
-
+    private bool canClick = true;
 
     private void Start() {
         gameManager = FindObjectOfType<GameManagerGame1>();
@@ -25,8 +27,7 @@ public class Letter : MonoBehaviour {
         List<char> options = new List<char>();
         options.AddRange(gameManager.problemList[gameManager.problemIndex].example);
         char[] answer = gameManager.answer.ToCharArray();
-        for (int i = 0; i < 2; i++)
-            options.AddRange(answer);
+        options.AddRange(answer);
         char selectedChar = options[Random.Range(0, options.Count)];
         displayText.text = "" + selectedChar;
     }
@@ -46,7 +47,7 @@ public class Letter : MonoBehaviour {
             StartFadeOut();
         }
 
-        GameObject[] hpImages = { hp1Image, hp2Image, hp3Image, hp4Image };
+        GameObject[] hpImages = { hp1Image, hp2Image, hp3Image, hp4Image, hp5Image, hp6Image };
         for (int i = 0; i < hpImages.Length; i++) {
             hpImages[i].SetActive(i == hp - 1);
             hpImages[i].GetComponent<SpriteRenderer>().transform.Rotate(Vector3.forward, 500f * Time.deltaTime);
@@ -66,7 +67,9 @@ public class Letter : MonoBehaviour {
         hp1Image.GetComponent<SpriteRenderer>(),
         hp2Image.GetComponent<SpriteRenderer>(),
         hp3Image.GetComponent<SpriteRenderer>(),
-        hp4Image.GetComponent<SpriteRenderer>()
+        hp4Image.GetComponent<SpriteRenderer>(),
+        hp5Image.GetComponent<SpriteRenderer>(),
+        hp6Image.GetComponent<SpriteRenderer>()
     };
         Color textColor = displayText.color;
 
@@ -84,17 +87,25 @@ public class Letter : MonoBehaviour {
         Destroy(gameObject);
     }
 
-
     void OnMouseDown() {
-        StartCoroutine(ShakeCoroutine());
-        hp -= 1;
-        if (hp == 0) {
-            letterPieceBreak.Play();
-            gameManager.InputLetter(displayText.text);
-            StartCoroutine(ShrinkAndDestroyCoroutine());
-            return;
+        if (gameManager.isGaming == 1 && canClick) {
+            StartCoroutine(ShakeCoroutine());
+            hp -= 1;
+            canClick = false;
+            if (hp == 0) {
+                letterPieceBreak.Play();
+                gameManager.InputLetter(displayText.text);
+                StartCoroutine(ShrinkAndDestroyCoroutine());
+                return;
+            }
+            letterPieceClick.Play();
+            StartCoroutine(EnableClickAfterDelay(0.7f));
         }
-        letterPieceClick.Play();
+    }
+
+    private IEnumerator EnableClickAfterDelay(float delay) {
+        yield return new WaitForSeconds(delay);
+        canClick = true;
     }
 
     private IEnumerator ShrinkAndDestroyCoroutine() {

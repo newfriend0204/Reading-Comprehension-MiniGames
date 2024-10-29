@@ -37,12 +37,12 @@ public class GameManagerMainMenu : MonoBehaviour
 
     private void Start() {
         StartCoroutine(FadeOut());
-        vehicle.transform.position = new Vector3(70.42f, 0.8699951f, 28.56f);
+        vehicle.transform.position = new Vector3(73.2f, 0.8699951f, 24.62f);
         road1.transform.position = new Vector3(64.55737f, 0.8699951f, 36.693f);
         road2.transform.position = new Vector3(27.8f, 0.8699951f, 87.7f);
         explosionParticle.transform.position = new Vector3(68.55f, 0.8699961f, 31.05f);
         GameObject title1 = Instantiate(titleText1, new Vector3(-34.94f, 5.1f, -52.27f), Quaternion.Euler(5.433f, -63.495f, -0.001f));
-        GameObject title2 = Instantiate(titleText2, new Vector3(71.962f, 9.729f, 12.894f), Quaternion.Euler(29.497f, -54.144f, 0));
+        GameObject title2 = Instantiate(titleText2, new Vector3(72.21f, 9.61f, 17.48f), Quaternion.Euler(29.497f, -54.144f, 0));
         fileManager = new FileManager();
         score = fileManager.LoadData(0);
     }
@@ -94,13 +94,13 @@ public class GameManagerMainMenu : MonoBehaviour
         Vector3 startingPosition = mainCamera.transform.position;
         Quaternion startingRotation = mainCamera.transform.rotation;
         while (elapsedTime < duration) {
-            mainCamera.transform.position = Vector3.Lerp(startingPosition, new Vector3(74.18389f, 9.732926f, 9.602714f), (elapsedTime / duration));
-            mainCamera.transform.rotation = Quaternion.Slerp(startingRotation, Quaternion.Euler(13.271f, -383.892f, 0.001f), (elapsedTime / duration));
+            mainCamera.transform.position = Vector3.Lerp(startingPosition, new Vector3(77.05f, 9.81f, 10.49f), (elapsedTime / duration));
+            mainCamera.transform.rotation = Quaternion.Slerp(startingRotation, Quaternion.Euler(13.267f, -385.249f, -0.311f), (elapsedTime / duration));
             elapsedTime += Time.deltaTime;
             yield return null;
         }
-        mainCamera.transform.position = new Vector3(74.18389f, 9.732926f, 9.602714f);
-        mainCamera.transform.rotation = Quaternion.Euler(13.271f, -383.892f, 0.001f);
+        mainCamera.transform.position = new Vector3(77.05f, 9.81f, 10.49f);
+        mainCamera.transform.rotation = Quaternion.Euler(13.267f, -385.249f, -0.311f);
     }
 
     public void MoveToMainMenu() {
@@ -129,7 +129,7 @@ public class GameManagerMainMenu : MonoBehaviour
             menus[i].SetActive(i == nowMenu);
         }
 
-        scoreText.text = "점수: " + score.ToString();
+        scoreText.text = "모은 점수: " + score.ToString();
     }
 
     public void StartGame1() {

@@ -47,7 +47,7 @@ public class GameManagerGame1 : MonoBehaviour {
     public string answer;
     public int problemIndex;
     private float angle = 0f;
-    private int isGaming = 1;
+    public int isGaming = 1;
     private FileManager fileManager;
 
     void Awake() {
@@ -300,7 +300,7 @@ public class GameManagerGame1 : MonoBehaviour {
             float randomZ = Random.Range(zMin, zMax);
             Vector3 spawnPosition = new Vector3(randomX, -10, randomZ);
             GameObject letter_hp = Instantiate(letterObject, spawnPosition, Quaternion.identity);
-            letter_hp.GetComponent<Letter>().hp = Random.Range(1, 5);
+            letter_hp.GetComponent<Letter>().hp = Random.Range(3, 7);
         }
     }
 
