@@ -11,6 +11,7 @@ to make commercial use of the work
 
 using System.Collections;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 [ExecuteInEditMode]
 [AddComponentMenu("Image Effects/GlitchEffect")]
@@ -45,9 +46,9 @@ public class GlitchEffect : MonoBehaviour {
 
     private IEnumerator ChangeColorIntensity() {
         while (true) {
-            yield return new WaitForSeconds(5f);
+            yield return new WaitForSeconds(Random.Range(6.1f, 7.9f));
             colorIntensity = 1.3f;
-            yield return new WaitForSeconds(0.6f);
+            yield return new WaitForSeconds(Random.Range(0.3f, 0.7f));
             colorIntensity = 0f;
         }
     }

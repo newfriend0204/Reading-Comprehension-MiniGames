@@ -6,6 +6,7 @@ using TMPro;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.Linq;
+using Application = UnityEngine.Application;
 
 public class questionListGame1 {
     public string question { get; set; }
@@ -39,6 +40,7 @@ public class GameManagerGame1 : MonoBehaviour {
     public GameObject stageClear;
     public TextMeshProUGUI stageClearExplain;
     public TextMeshProUGUI stageClearScore;
+    public AudioSource useHintSound;
     private string answerCheck = "000000";
     private int score = 0;
     private float scoreTimer = 0f;
@@ -132,7 +134,7 @@ public class GameManagerGame1 : MonoBehaviour {
         new questionListGame1 {question = "그녀는 매일 저녁 을 준비한다.", answer = "요리", example = new List<char>{'영', '화'}},
         new questionListGame1 {question = "운동 후에는 을 꼭 마셔야 한다.", answer = "물", example = new List<char>{'차'}},
         new questionListGame1 {question = "나는 주말마다 을 즐기러 간다.", answer = "산책", example = new List<char>{'공', '부'}},
-        new questionListGame1 {question = "공부하는 동안 을 자주 한다.", answer = "휴식", example = new List<char>{'장', '난'}},
+        new questionListGame1 {question = "공부하는 동안 을 자주 한다.", answer = "휴식", example = new List<char>{'장', '난'}},
         new questionListGame1 {question = "오늘은 가족과 을 보내기로 했다.", answer = "시간", example = new List<char>{'책'}},
         new questionListGame1 {question = "여름철에는 이 많이 필요하다.", answer = "물", example = new List<char>{'의', '자'}},
         new questionListGame1 {question = "친구와의 은 언제나 즐겁다.", answer = "대화", example = new List<char>{'경', '쟁'}},
@@ -267,7 +269,6 @@ public class GameManagerGame1 : MonoBehaviour {
         new questionListGame1 {question = "그녀는 다양한 을 좋아한다.", answer = "스포츠", example = new List<char>{ '미', '래'}}
     };
 
-
     private void Start() {
         fileManager = new FileManager();
         StartCoroutine(FadeOut());
@@ -347,10 +348,16 @@ public class GameManagerGame1 : MonoBehaviour {
         float xOffset = Mathf.Cos(angle * Mathf.Deg2Rad) * 0.005f;
         float zOffset = Mathf.Sin(angle * Mathf.Deg2Rad) * 0.005f;
         background.transform.position += new Vector3(xOffset, 0, zOffset);
+
+        if (Application.platform == RuntimePlatform.Android && isGaming == 1) {
+            if (Input.GetKey(KeyCode.Escape))
+                ReturnMainMenu();
+        }
     }
 
     public void InputHint() {
         if (answerTimer >= 20f) {
+            useHintSound.Play();
             answerTimer = 0;
             score -= 500;
             hintItemImage.color = new Color32(151, 151, 151, 255);

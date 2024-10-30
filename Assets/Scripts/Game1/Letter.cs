@@ -123,7 +123,7 @@ public class Letter : MonoBehaviour {
     private IEnumerator ShakeCoroutine() {
         Vector3 originalPosition = transform.position;
         float elapsed = 0f;
-        while (elapsed < 0.5f) {
+        while (elapsed < 0.7f) {
             float randomX = Random.Range(-0.3f, 0.3f);
             float randomZ = Random.Range(-0.3f, 0.3f);
             Vector3 newPosition = new Vector3(originalPosition.x + randomX, originalPosition.y, originalPosition.z + randomZ);
@@ -131,6 +131,6 @@ public class Letter : MonoBehaviour {
             elapsed += Time.deltaTime;
             yield return null;
         }
-        transform.position = originalPosition;
+        transform.position = new Vector3(originalPosition.x + Random.Range(-0.3f, 0.3f), originalPosition.y, originalPosition.z + Random.Range(-0.3f, 0.3f));
     }
 }

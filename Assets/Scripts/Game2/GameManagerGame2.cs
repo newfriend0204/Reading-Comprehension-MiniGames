@@ -333,6 +333,11 @@ public class GameManagerGame2 : MonoBehaviour {
         float shake = Mathf.Sin(Time.time * 0.5f) * 10f;
         float finalRotationZ = targetRotationZ + shake;
         dashboardPin.localEulerAngles = new Vector3(0, 0, finalRotationZ + Random.Range(-7f, 7f));
+
+        if (Application.platform == RuntimePlatform.Android && nowPhase < 4) {
+            if (Input.GetKey(KeyCode.Escape))
+                ReturnMainMenu();
+        }
     }
 
     public void Penalty() {
