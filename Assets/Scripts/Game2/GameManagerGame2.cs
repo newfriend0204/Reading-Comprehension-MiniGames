@@ -315,7 +315,7 @@ public class GameManagerGame2 : MonoBehaviour {
         }
 
         scoreTimer += Time.deltaTime;
-        if (scoreTimer >= 0.003f && nowPhase != 4) {
+        if (scoreTimer >= 0.004f && nowPhase != 4) {
             score -= 1;
             scoreTimer = 0f;
         }
@@ -341,7 +341,7 @@ public class GameManagerGame2 : MonoBehaviour {
     }
 
     public void Penalty() {
-        score -= 500;
+        score -= 400;
         StartCoroutine(ChangeScoreColor());
     }
 

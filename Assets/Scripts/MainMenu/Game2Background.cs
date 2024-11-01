@@ -6,13 +6,19 @@ public class Game2Background : MonoBehaviour {
     public GameObject road2;
     public ParticleSystem explosionParticle;
     public GameObject[] obstacles;
+    public GameObject vehicle;
     public float speed;
     private Vector3 road1StartPosition;
     private Vector3 road2StartPosition;
     private float angle = 54.206f;
     private Vector3 direction;
+    private FileManager fileManager;
+    public Mesh[] visualMeshes;
+    public Mesh[] colliderMeshes;
+    int index = 0;
 
     void Start() {
+        fileManager = new FileManager();
         road1StartPosition = road1.transform.position;
         road2StartPosition = road2.transform.position;
         float radians = angle * Mathf.Deg2Rad;
@@ -30,6 +36,15 @@ public class Game2Background : MonoBehaviour {
     void Update() {
         MoveRoad(road1);
         MoveRoad(road2);
+
+        for (int i = 15; i < 30; i++) {
+            if (fileManager.LoadData(i) == 2)
+                index = i - 15;
+        }
+        MeshFilter meshFilter = vehicle.gameObject.GetComponent<MeshFilter>();
+        MeshCollider meshCollider = vehicle.gameObject.GetComponent<MeshCollider>();
+        meshFilter.mesh = visualMeshes[index];
+        meshCollider.sharedMesh = colliderMeshes[index];
     }
 
     private void MoveRoad(GameObject road) {

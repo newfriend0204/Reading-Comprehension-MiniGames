@@ -712,7 +712,7 @@ Light:
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
-  m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
+  m_Color: {r: 0.3056603, g: 0.3056603, b: 0.3056603, a: 1}
   m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
@@ -1241,7 +1241,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.2936204, g: 0.8778239, b: 0.9547169, a: 0.68235296}
+  m_Color: {r: 0.06415099, g: 0.06415099, b: 0.06415099, a: 0.8352941}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -15851,8 +15851,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -17634,6 +17634,18 @@ MonoBehaviour:
   fallSound: {fileID: 8300000, guid: ccb9b31174a3a43709a113a9c7cf4252, type: 3}
   resultText: {fileID: 1774554521}
   problemText: {fileID: 520552165}
+  visualMeshes:
+  - {fileID: 4300000, guid: a7dca03bf1b6f9b46b6916fa5450f775, type: 3}
+  - {fileID: 4300000, guid: 7799a29fdee308341b16b65d8a002357, type: 3}
+  - {fileID: 4300000, guid: 93b9de2c4710d6b4e9ac38987a064d42, type: 3}
+  - {fileID: 4300000, guid: 6df34ee591500634282ce8431bcb6976, type: 3}
+  - {fileID: 4300000, guid: 576da546347c040428bb0204a37e73d3, type: 3}
+  colliderMeshes:
+  - {fileID: 4300000, guid: a7dca03bf1b6f9b46b6916fa5450f775, type: 3}
+  - {fileID: 4300000, guid: 7799a29fdee308341b16b65d8a002357, type: 3}
+  - {fileID: 4300000, guid: 93b9de2c4710d6b4e9ac38987a064d42, type: 3}
+  - {fileID: 4300000, guid: 6df34ee591500634282ce8431bcb6976, type: 3}
+  - {fileID: 4300000, guid: 576da546347c040428bb0204a37e73d3, type: 3}
 --- !u!82 &1221921988
 AudioSource:
   m_ObjectHideFlags: 0

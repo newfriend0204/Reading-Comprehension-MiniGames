@@ -17,11 +17,13 @@ public class Letter : MonoBehaviour {
     public AudioSource letterPieceClick;
     private bool isFading = false;
     public int hp;
+    private int saveHp;
     private float angle = 0f;
     private int movementType; // 1: y축으로만 상승, 2: 시계방향 회전, 3: 반시계방향 회전
     private bool canClick = true;
 
     private void Start() {
+        saveHp = hp;
         gameManager = FindObjectOfType<GameManagerGame1>();
         movementType = Random.Range(1, 4);
         List<char> options = new List<char>();
@@ -52,6 +54,11 @@ public class Letter : MonoBehaviour {
             hpImages[i].SetActive(i == hp - 1);
             hpImages[i].GetComponent<SpriteRenderer>().transform.Rotate(Vector3.forward, 500f * Time.deltaTime);
         }
+
+        float alpha = 1f - (float)(hp - 1) / (saveHp - 1);
+        Color color = displayText.color;
+        color.a = alpha;
+        displayText.color = color;
     }
 
     public void StartFadeOut() {

@@ -12,6 +12,9 @@ public class CarController : MonoBehaviour {
     public AudioClip fallSound;
     public TextMeshProUGUI resultText;
     public TextMeshProUGUI problemText;
+    public Mesh[] visualMeshes;
+    public Mesh[] colliderMeshes;
+    private FileManager fileManager;
 
     void OnCollisionEnter(Collision collision) {
         if (collision.gameObject.CompareTag("Obstacle")) {
@@ -31,7 +34,7 @@ public class CarController : MonoBehaviour {
             collision.gameObject.tag = "Untagged";
             getCoinParticle.transform.position = collision.gameObject.transform.position;
             getCoinParticle.Play();
-            gameManager.score += 500;
+            gameManager.score += 750;
             Destroy(collision.gameObject);
             GetComponent<AudioSource>().PlayOneShot(getCoinSound, 1f);
         } else if (collision.gameObject.CompareTag("Arch")) {
@@ -103,7 +106,7 @@ public class CarController : MonoBehaviour {
         problemText.text = "다음 문제 출제 중...";
         if (gameManager.nowPhase == 3)
             problemText.text = "완주하십시오.";
-        gameManager.score -= 1000;
+        gameManager.score -= 500;
         GetComponent<AudioSource>().PlayOneShot(fallSound, 1f);
         for (int i = 0; i < 3; i++) {
             resultText.alpha = 0f;
@@ -131,5 +134,18 @@ public class CarController : MonoBehaviour {
         resultText.alpha = 0f;
         if (gameManager.nowPhase == 2)
             problemText.text = gameManager.problemList[gameManager.randomIndex2].question;
+    }
+
+    private void Start() {
+        fileManager = new FileManager();
+        int index = 0;
+        for (int i = 15; i < 30; i++) {
+            if (fileManager.LoadData(i) == 2)
+                index = i - 15;
+        }
+        MeshFilter meshFilter = gameObject.GetComponent<MeshFilter>();
+        MeshCollider meshCollider = gameObject.GetComponent<MeshCollider>();
+        meshFilter.mesh = visualMeshes[index];
+        meshCollider.sharedMesh = colliderMeshes[index];
     }
 }

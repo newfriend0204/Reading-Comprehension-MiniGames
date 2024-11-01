@@ -4,16 +4,19 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
+using System;
+using Random = UnityEngine.Random;
 
 public class GameManagerMainMenu : MonoBehaviour
 {
-    private int nowMenu = 0; //0:메인 화면, 1:게임1 화면, 2:게임2 화면
+    private int nowMenu = 0; //0:메인 화면, 1:게임1 화면, 2:게임2 화면 3:상점 화면
     public Camera mainCamera;
     public GameObject mainMenu;
     public GameObject game1Menu;
     public GameObject game2Menu;
     public GameObject game1Explain;
     public GameObject game2Explain;
+    public GameObject shop;
     public GameObject vehicle;
     public GameObject road1;
     public GameObject road2;
@@ -21,9 +24,12 @@ public class GameManagerMainMenu : MonoBehaviour
     public GameObject titleText1;
     public GameObject titleText2;
     private GameObject[] menus;
+    public Button[] vehicles;
     public GameObject letterObject;
     public Image fadeBackground;
     public TextMeshProUGUI scoreText;
+    public AudioClip purchaseSound;
+    public AudioClip equipmentSound;
     private int score = 0;
     private FileManager fileManager;
 
@@ -44,7 +50,12 @@ public class GameManagerMainMenu : MonoBehaviour
         GameObject title1 = Instantiate(titleText1, new Vector3(-34.98f, 5.58f, -52.25f), Quaternion.Euler(5.433f, -63.495f, -0.001f));
         GameObject title2 = Instantiate(titleText2, new Vector3(72.291f, 9.667f, 17.421f), Quaternion.Euler(29.497f, -54.144f, 0));
         fileManager = new FileManager();
-        score = fileManager.LoadData(0);
+
+        vehicles[0].onClick.AddListener(() => VehiclePurchase(0, 0));
+        vehicles[1].onClick.AddListener(() => VehiclePurchase(1, 7000));
+        vehicles[2].onClick.AddListener(() => VehiclePurchase(2, 15000));
+        vehicles[3].onClick.AddListener(() => VehiclePurchase(3, 5000));
+        vehicles[4].onClick.AddListener(() => VehiclePurchase(4, 6000));
     }
 
     private IEnumerator SpawnObjectCoroutine() {
@@ -108,6 +119,26 @@ public class GameManagerMainMenu : MonoBehaviour
         StartCoroutine(MoveCameraToMainMenu());
     }
 
+    private IEnumerator MoveCameraToShop() {
+        float elapsedTime = 0f;
+        float duration = 0.4f;
+        Vector3 startingPosition = mainCamera.transform.position;
+        Quaternion startingRotation = mainCamera.transform.rotation;
+        while (elapsedTime < duration) {
+            mainCamera.transform.position = Vector3.Lerp(startingPosition, new Vector3(29.13097f, 6.752212f, -19.82013f), (elapsedTime / duration));
+            mainCamera.transform.rotation = Quaternion.Slerp(startingRotation, Quaternion.Euler(13.161f, -378.782f, 1.412f), (elapsedTime / duration));
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+        mainCamera.transform.position = new Vector3(29.13097f, 6.752212f, -19.82013f);
+        mainCamera.transform.rotation = Quaternion.Euler(13.161f, -378.782f, 1.412f);
+    }
+
+    public void MoveToShop() {
+        nowMenu = 3;
+        StartCoroutine(MoveCameraToShop());
+    }
+
     private IEnumerator MoveCameraToMainMenu() {
         game1Explain.SetActive(false);
         game2Explain.SetActive(false);
@@ -126,12 +157,28 @@ public class GameManagerMainMenu : MonoBehaviour
     }
 
     private void Update() {
-        menus = new GameObject[] {mainMenu, game1Menu, game2Menu};
+        menus = new GameObject[] {mainMenu, game1Menu, game2Menu, shop};
         for (int i = 0; i < menus.Length; i++) {
             menus[i].SetActive(i == nowMenu);
         }
 
         scoreText.text = "모은 점수: " + score.ToString();
+        score = fileManager.LoadData(0);
+
+        for (int i = 0; i < 15; i++) {
+            if (fileManager.LoadData(15 + i) == 2) {
+                TextMeshProUGUI buttonText = vehicles[i].GetComponentInChildren<TextMeshProUGUI>();
+                buttonText.text = "장착 중";
+                Image image = vehicles[i].GetComponent<Image>();
+                image.color = new Color(39 / 255f, 111 / 255f, 22 / 255f, 150 / 255f);
+            }
+            if (fileManager.LoadData(15 + i) == 1) {
+                TextMeshProUGUI buttonText = vehicles[i].GetComponentInChildren<TextMeshProUGUI>();
+                buttonText.text = "장착하기";
+                Image image = vehicles[i].GetComponent<Image>();
+                image.color = new Color(108 / 255f, 255 / 255f, 73 / 255f, 150 / 255f);
+            }
+        }
     }
 
     public void StartGame1() {
@@ -194,5 +241,22 @@ public class GameManagerMainMenu : MonoBehaviour
             SceneManager.LoadScene("Game1");
         else if (check == 2)
             SceneManager.LoadScene("Game2");
+    }
+
+    public void VehiclePurchase(int index, int needScore) {
+        if (needScore <= score && fileManager.LoadData(15 + index) == 0) {
+            GetComponent<AudioSource>().PlayOneShot(purchaseSound, 1f);
+            fileManager.SaveData(1, 15 + index);
+            fileManager.SaveData(score - needScore, 0);
+        } else if (fileManager.LoadData(15 + index) == 1) {
+            for (int i = 0; i < 15; i++) {
+                if (fileManager.LoadData(15 + i) == 2) {
+                    fileManager.SaveData(1, 15 + i);
+                    break;
+                }
+            }
+            GetComponent<AudioSource>().PlayOneShot(equipmentSound, 1f);
+            fileManager.SaveData(2, 15 + index);
+        }
     }
 }
