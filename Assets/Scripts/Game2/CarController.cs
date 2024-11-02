@@ -34,7 +34,7 @@ public class CarController : MonoBehaviour {
             collision.gameObject.tag = "Untagged";
             getCoinParticle.transform.position = collision.gameObject.transform.position;
             getCoinParticle.Play();
-            gameManager.score += 750;
+            gameManager.score += 600;
             Destroy(collision.gameObject);
             GetComponent<AudioSource>().PlayOneShot(getCoinSound, 1f);
         } else if (collision.gameObject.CompareTag("Arch")) {
@@ -89,7 +89,7 @@ public class CarController : MonoBehaviour {
         problemText.text = "다음 문제 출제 중...";
         if (gameManager.nowPhase == 3)
             problemText.text = "완주하십시오.";
-        gameManager.score += 1000;
+        gameManager.score += 1500;
         GetComponent<AudioSource>().PlayOneShot(getCoinSound, 1f);
         for (int i = 0; i < 3; i++) {
             resultText.alpha = 0f;
@@ -106,7 +106,7 @@ public class CarController : MonoBehaviour {
         problemText.text = "다음 문제 출제 중...";
         if (gameManager.nowPhase == 3)
             problemText.text = "완주하십시오.";
-        gameManager.score -= 500;
+        gameManager.score -= 300;
         GetComponent<AudioSource>().PlayOneShot(fallSound, 1f);
         for (int i = 0; i < 3; i++) {
             resultText.alpha = 0f;

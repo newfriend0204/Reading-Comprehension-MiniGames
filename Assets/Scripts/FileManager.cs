@@ -4,17 +4,6 @@ using UnityEngine;
 public class FileManager {
     private string filePath;
 
-    /*
-     * 1번째 줄: 현재 점수
-     * 2~15번째 줄: game1 배경 화면
-     * 16~30번째 줄: game1 글자 조각
-     * 31~45번째 줄: game2 배경 화면
-     * 46~60번째 줄: game2 운송수단
-     * 0:소유하고 있지 않음
-     * 1:소유하고 있음
-     * 2:소유하고 있으며 장착중임
-     */
-
     public FileManager() {
         filePath = Path.Combine(Application.persistentDataPath, "data.txt");
 

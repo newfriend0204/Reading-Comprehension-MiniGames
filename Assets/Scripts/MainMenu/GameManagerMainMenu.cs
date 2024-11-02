@@ -10,6 +10,7 @@ using Random = UnityEngine.Random;
 public class GameManagerMainMenu : MonoBehaviour
 {
     private int nowMenu = 0; //0:메인 화면, 1:게임1 화면, 2:게임2 화면 3:상점 화면
+    private int nowShopMenu = 0; //0:게임1 배경, 1:게임1 글자 조각, 2:게임2 배경, 3:게임2 운송수단
     public Camera mainCamera;
     public GameObject mainMenu;
     public GameObject game1Menu;
@@ -17,14 +18,22 @@ public class GameManagerMainMenu : MonoBehaviour
     public GameObject game1Explain;
     public GameObject game2Explain;
     public GameObject shop;
+    public GameObject shopGame1Background;
+    public GameObject shopGame1LetterPiece;
+    public GameObject shopGame2Background;
+    public GameObject shopGame2Vehicle;
     public GameObject vehicle;
     public GameObject road1;
     public GameObject road2;
     public GameObject explosionParticle;
     public GameObject titleText1;
     public GameObject titleText2;
+    public GameObject shopLeftButton;
+    public GameObject shopRightButton;
     private GameObject[] menus;
+    private GameObject[] shopMenus;
     public Button[] vehicles;
+    public Button[] game1Backgrounds;
     public GameObject letterObject;
     public Image fadeBackground;
     public TextMeshProUGUI scoreText;
@@ -56,6 +65,10 @@ public class GameManagerMainMenu : MonoBehaviour
         vehicles[2].onClick.AddListener(() => VehiclePurchase(2, 15000));
         vehicles[3].onClick.AddListener(() => VehiclePurchase(3, 5000));
         vehicles[4].onClick.AddListener(() => VehiclePurchase(4, 6000));
+
+        game1Backgrounds[0].onClick.AddListener(() => Game1BackgroundPurchase(0, 0));
+        game1Backgrounds[1].onClick.AddListener(() => Game1BackgroundPurchase(1, 4000));
+        game1Backgrounds[2].onClick.AddListener(() => Game1BackgroundPurchase(2, 6000));
     }
 
     private IEnumerator SpawnObjectCoroutine() {
@@ -115,6 +128,7 @@ public class GameManagerMainMenu : MonoBehaviour
     }
 
     public void MoveToMainMenu() {
+        nowShopMenu = 0;
         nowMenu = 0;
         StartCoroutine(MoveCameraToMainMenu());
     }
@@ -157,10 +171,18 @@ public class GameManagerMainMenu : MonoBehaviour
     }
 
     private void Update() {
-        menus = new GameObject[] {mainMenu, game1Menu, game2Menu, shop};
+        menus = new GameObject[] { mainMenu, game1Menu, game2Menu, shop };
         for (int i = 0; i < menus.Length; i++) {
             menus[i].SetActive(i == nowMenu);
         }
+
+        shopMenus = new GameObject[] { shopGame1Background, shopGame1LetterPiece, shopGame2Background, shopGame2Vehicle };
+        for (int i = 0; i < shopMenus.Length; i++) {
+            shopMenus[i].SetActive(i == nowShopMenu);
+        }
+
+        shopLeftButton.SetActive(nowShopMenu != 0);
+        shopRightButton.SetActive(nowShopMenu != 3);
 
         scoreText.text = "모은 점수: " + score.ToString();
         score = fileManager.LoadData(0);
@@ -176,6 +198,21 @@ public class GameManagerMainMenu : MonoBehaviour
                 TextMeshProUGUI buttonText = vehicles[i].GetComponentInChildren<TextMeshProUGUI>();
                 buttonText.text = "장착하기";
                 Image image = vehicles[i].GetComponent<Image>();
+                image.color = new Color(108 / 255f, 255 / 255f, 73 / 255f, 150 / 255f);
+            }
+        }
+
+        for (int i = 0; i < 15; i++) {
+            if (fileManager.LoadData(30 + i) == 2) {
+                TextMeshProUGUI buttonText = game1Backgrounds[i].GetComponentInChildren<TextMeshProUGUI>();
+                buttonText.text = "장착 중";
+                Image image = game1Backgrounds[i].GetComponent<Image>();
+                image.color = new Color(39 / 255f, 111 / 255f, 22 / 255f, 150 / 255f);
+            }
+            if (fileManager.LoadData(30 + i) == 1) {
+                TextMeshProUGUI buttonText = game1Backgrounds[i].GetComponentInChildren<TextMeshProUGUI>();
+                buttonText.text = "장착하기";
+                Image image = game1Backgrounds[i].GetComponent<Image>();
                 image.color = new Color(108 / 255f, 255 / 255f, 73 / 255f, 150 / 255f);
             }
         }
@@ -241,6 +278,31 @@ public class GameManagerMainMenu : MonoBehaviour
             SceneManager.LoadScene("Game1");
         else if (check == 2)
             SceneManager.LoadScene("Game2");
+    }
+
+    public void ShopMoveLeft() {
+        nowShopMenu--;
+    }
+
+    public void ShopMoveRight() {
+        nowShopMenu++;
+    }
+
+    public void Game1BackgroundPurchase(int index, int needScore) {
+        if (needScore <= score && fileManager.LoadData(30 + index) == 0) {
+            GetComponent<AudioSource>().PlayOneShot(purchaseSound, 1f);
+            fileManager.SaveData(1, 30 + index);
+            fileManager.SaveData(score - needScore, 0);
+        } else if (fileManager.LoadData(30 + index) == 1) {
+            for (int i = 0; i < 15; i++) {
+                if (fileManager.LoadData(30 + i) == 2) {
+                    fileManager.SaveData(1, 30 + i);
+                    break;
+                }
+            }
+            GetComponent<AudioSource>().PlayOneShot(equipmentSound, 1f);
+            fileManager.SaveData(2, 30 + index);
+        }
     }
 
     public void VehiclePurchase(int index, int needScore) {

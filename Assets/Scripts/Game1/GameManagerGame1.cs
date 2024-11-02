@@ -26,7 +26,6 @@ public class GameManagerGame1 : MonoBehaviour {
     public GameObject answerCube5;
     public GameObject answerCube6;
     public GameObject answerCubeCurrentPosition;
-    public GameObject background;
     public TextMeshProUGUI answerLetter1;
     public TextMeshProUGUI answerLetter2;
     public TextMeshProUGUI answerLetter3;
@@ -35,8 +34,10 @@ public class GameManagerGame1 : MonoBehaviour {
     public TextMeshProUGUI answerLetter6;
     public TextMeshProUGUI hintItemText;
     public TextMeshProUGUI showScore;
+    public GameObject background;
     public Image hintItemImage;
     public Image fadeBackground;
+    public List<Sprite> backgrounds;
     public GameObject stageClear;
     public TextMeshProUGUI stageClearExplain;
     public TextMeshProUGUI stageClearScore;
@@ -284,6 +285,14 @@ public class GameManagerGame1 : MonoBehaviour {
             answerCheck = answerCheck.Substring(0, answer.Length);
         score = answer.Length * 2000;
 
+        int index = 0;
+        for (int i = 30; i < 45; i++) {
+            if (fileManager.LoadData(i) == 2)
+                index = i - 30;
+        }
+        SpriteRenderer backgroundRenderer = background.GetComponent<SpriteRenderer>();
+        backgroundRenderer.sprite = backgrounds[index];
+
         mainCamera = Camera.main;
         StartCoroutine(SpawnObjectCoroutine());
     }
@@ -437,7 +446,9 @@ public class GameManagerGame1 : MonoBehaviour {
         stageClear.SetActive(true);
         stageClearScore.text = "얻은 점수: " + score.ToString();
         int placeholderCount = question.Count(c => c == '');
-        stageClearExplain.text = question.Replace(new string('', placeholderCount), answer);
+        string coloredAnswer = $"<color=blue>{answer}</color>";
+        stageClearExplain.text = question.Replace(new string('', placeholderCount), coloredAnswer);
+        fileManager.AddData(score, 0);
     }
 
     public void ReturnMainMenu() {
@@ -466,7 +477,6 @@ public class GameManagerGame1 : MonoBehaviour {
     }
 
     private IEnumerator FadeIn(int check) {
-        fileManager.AddData(score, 0);
         fadeBackground.gameObject.SetActive(true);
         Color color = fadeBackground.color;
         color.a = 0;

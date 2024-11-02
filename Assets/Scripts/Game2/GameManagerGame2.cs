@@ -263,14 +263,14 @@ public class GameManagerGame2 : MonoBehaviour {
 
         for (int i = 0; i < numberOfObstacles; i++) {
             float randomX = Random.Range(-8.5f, 8.5f);
-            float randomZ = Random.Range(-593f, 114f);
+            float randomZ = Random.Range(-593f, 130f);
             int randomIndex = Random.Range(0, obstaclePrefabs.Length);
             GameObject obstacle = obstaclePrefabs[randomIndex];
             Instantiate(obstacle, new Vector3(randomX, -150, randomZ), Quaternion.identity);
         }
         for (int i = 0; i < numberOfCoins; i++) {
             float randomX = Random.Range(-8.5f, 8.5f);
-            float randomZ = Random.Range(-630f, 175f);
+            float randomZ = Random.Range(-593f, 130f);
             GameObject coin = Instantiate(coinPrefab, new Vector3(randomX, -149.5f, randomZ), Quaternion.identity);
             coin.AddComponent<CoinRotation>();
         }
@@ -303,7 +303,7 @@ public class GameManagerGame2 : MonoBehaviour {
             currentSpeed = Mathf.Clamp(currentSpeed, 0, 45);
             vehicleRigidbody.MovePosition(vehicle.transform.position + vehicle.transform.forward * currentSpeed * Time.deltaTime);
             if (horizontal != 0 && currentSpeed != 0) {
-                Quaternion turnRotation = Quaternion.Euler(0f, horizontal * 45 * Time.deltaTime, 0f);
+                Quaternion turnRotation = Quaternion.Euler(0f, horizontal * 55 * Time.deltaTime, 0f);
                 vehicleRigidbody.MoveRotation(vehicleRigidbody.rotation * turnRotation);
             }
         } else {
@@ -375,6 +375,7 @@ public class GameManagerGame2 : MonoBehaviour {
             stageClearPhase2Answer.text = "¡æ" + problemList[randomIndex2].example1;
         else
             stageClearPhase2Answer.text = "¡æ" + problemList[randomIndex2].example2;
+        fileManager.AddData(score, 0);
         StartCoroutine(MoveAnswer());
     }
 
@@ -388,11 +389,11 @@ public class GameManagerGame2 : MonoBehaviour {
         float elapsedTime = 0;
         Vector3 startPosition = text.transform.localPosition;
         while (elapsedTime < 0.5f) {
-            text.transform.localPosition = Vector3.Lerp(startPosition, new Vector3(-6, text.transform.localPosition.y, text.transform.localPosition.z), elapsedTime / 0.5f);
+            text.transform.localPosition = Vector3.Lerp(startPosition, new Vector3(-140, text.transform.localPosition.y, text.transform.localPosition.z), elapsedTime / 0.5f);
             elapsedTime += Time.deltaTime;
             yield return null;
         }
-        text.transform.localPosition = new Vector3(-6, text.transform.localPosition.y, text.transform.localPosition.z);
+        text.transform.localPosition = new Vector3(-140, text.transform.localPosition.y, text.transform.localPosition.z);
     }
 
     public void ReturnMainMenu() {
@@ -421,7 +422,6 @@ public class GameManagerGame2 : MonoBehaviour {
     }
 
     private IEnumerator FadeIn(int check) {
-        fileManager.AddData(score, 0);
         fadeBackground.gameObject.SetActive(true);
         Color color = fadeBackground.color;
         color.a = 0;
