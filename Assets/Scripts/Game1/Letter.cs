@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using Random = UnityEngine.Random;
+using UnityEngine.UIElements;
 
 public class Letter : MonoBehaviour {
     public TextMeshPro displayText;
@@ -15,12 +16,14 @@ public class Letter : MonoBehaviour {
     public GameObject hp6Image;
     public AudioSource letterPieceBreak;
     public AudioSource letterPieceClick;
+    public List<Sprite> pieces;
     private bool isFading = false;
     public int hp;
     private int saveHp;
     private float angle = 0f;
     private int movementType; // 1: y축으로만 상승, 2: 시계방향 회전, 3: 반시계방향 회전
     private bool canClick = true;
+    private FileManager fileManager;
 
     private void Start() {
         saveHp = hp;
@@ -32,12 +35,24 @@ public class Letter : MonoBehaviour {
         options.AddRange(answer);
         char selectedChar = options[Random.Range(0, options.Count)];
         displayText.text = "" + selectedChar;
+        fileManager = new FileManager();
+        int index = 0;
+        for (int i = 45; i < 60; i++) {
+            if (fileManager.LoadData(i) == 2)
+                index = i - 45;
+        }
+        GameObject[] hpImages = { hp1Image, hp2Image, hp3Image, hp4Image, hp5Image, hp6Image };
+        for (int i = 0; i < hpImages.Length; i++) {
+            SpriteRenderer piecesRenderer = hpImages[i].GetComponent<SpriteRenderer>();
+            piecesRenderer.sprite = pieces[index];
+        }
+
     }
 
     private void Update() {
         gameManager = FindObjectOfType<GameManagerGame1>();
         if (movementType == 1) {
-            transform.position += new Vector3(0, 6f * Time.deltaTime, 0);
+            transform.position += new Vector3(0, 4f * Time.deltaTime, 0);
         } else {
             angle += Time.deltaTime * 50f * (movementType == 2 ? 1 : -1);
             float xOffset = Mathf.Cos(angle * Mathf.Deg2Rad) * 0.008f;
@@ -45,7 +60,7 @@ public class Letter : MonoBehaviour {
             transform.position += new Vector3(xOffset, 6f * Time.deltaTime, zOffset);
         }
 
-        if (transform.position.y >= 13 && !isFading) {
+        if (transform.position.y >= 14 && !isFading) {
             StartFadeOut();
         }
 
@@ -106,7 +121,7 @@ public class Letter : MonoBehaviour {
                 return;
             }
             letterPieceClick.Play();
-            StartCoroutine(EnableClickAfterDelay(0.7f));
+            StartCoroutine(EnableClickAfterDelay(0.3f));
         }
     }
 
@@ -130,14 +145,14 @@ public class Letter : MonoBehaviour {
     private IEnumerator ShakeCoroutine() {
         Vector3 originalPosition = transform.position;
         float elapsed = 0f;
-        while (elapsed < 0.7f) {
+        while (elapsed < 0.3f) {
             float randomX = Random.Range(-0.3f, 0.3f);
             float randomZ = Random.Range(-0.3f, 0.3f);
-            Vector3 newPosition = new Vector3(originalPosition.x + randomX, originalPosition.y, originalPosition.z + randomZ);
+            Vector3 newPosition = new Vector3(originalPosition.x + randomX, transform.position.y, originalPosition.z + randomZ);
             transform.position = newPosition;
             elapsed += Time.deltaTime;
             yield return null;
         }
-        transform.position = new Vector3(originalPosition.x + Random.Range(-0.3f, 0.3f), originalPosition.y, originalPosition.z + Random.Range(-0.3f, 0.3f));
+        transform.position = new Vector3(originalPosition.x + Random.Range(-0.7f, 0.7f), transform.position.y, originalPosition.z + Random.Range(-0.7f, 0.7f));
     }
 }

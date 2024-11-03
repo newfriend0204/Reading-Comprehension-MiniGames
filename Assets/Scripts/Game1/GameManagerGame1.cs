@@ -267,7 +267,51 @@ public class GameManagerGame1 : MonoBehaviour {
         new questionListGame1 {question = "저녁에 을 보며 소원을 빌었다.", answer = "별", example = new List<char>{'런'}},
         new questionListGame1 {question = "새로운 을 찾아 듣는 것이 취미다.", answer = "음악", example = new List<char>{'으', '막'}},
         new questionListGame1 {question = "주말마다 를 하기로 결정했다.", answer = "자원봉사", example = new List<char>{'지', '위', '보', '상'}},
-        new questionListGame1 {question = "그녀는 다양한 을 좋아한다.", answer = "스포츠", example = new List<char>{ '미', '래'}}
+        new questionListGame1 {question = "그녀는 다양한 을 좋아한다.", answer = "스포츠", example = new List<char>{'미', '래'}},
+        new questionListGame1 {question = "오늘은 친구들과 함께 에 갔어요.", answer = "영화관", example = new List<char>{'여', '휘'}},
+        new questionListGame1 {question = "자연에서 산책하며  공기를 마셨어요.", answer = "신선한", example = new List<char>{'시', '시'}},
+        new questionListGame1 {question = "그 책은 정말  이야기로 가득 차 있었어요.", answer = "흥미로운", example = new List<char>{'어', '지'}},
+        new questionListGame1 {question = "매일  습관을 기르려고 노력하고 있어요.", answer = "운동하는", example = new List<char>{'폭', '쉭'}},
+        new questionListGame1 {question = " 레시피로 맛있는 요리를 만들었답니다.", answer = "새로운", example = new List<char>{'신', '문'}},
+        new questionListGame1 {question = " 즐거운 시간을 보내고 싶어요.", answer = "바닷가에서", example = new List<char>{'대', '양'}},
+        new questionListGame1 {question = "음악회에서  공연을 감상했습니다.", answer = "감동적인", example = new List<char>{'감', '성'}},
+        new questionListGame1 {question = "이 문제를  위해 깊이 고민하고 있어요.", answer = "해결하기", example = new List<char>{'실', '패'}},
+        new questionListGame1 {question = " 문화와 언어를 배우는 것이 재미있어요.", answer = "다양한", example = new List<char>{'당', '야'}},
+        new questionListGame1 {question = "우리는 함께 여행하며 많은  만들었어요.", answer = "추억을", example = new List<char>{'초', '악'}},
+        new questionListGame1 {question = "그의 은 매우 현실적이라 문제를 쉽게 해결했다.", answer = "사고방식", example = new List<char>{'생', '각', '형', '식'}},
+        new questionListGame1 {question = "그녀는 항상 의도적으로 행동해 주변 사람들에게  영향을 미쳤다.", answer = "긍정적인", example = new List<char>{'맛', '이', '없', '는'}},
+        new questionListGame1 {question = "어려운 시기에 을 가지고 기다리는 것이 중요하다.", answer = "인내심", example = new List<char>{'참', '을', '정'}},
+        new questionListGame1 {question = "이 영화는 많은  메시지를 담고 있어 관객에게 생각할 거리를 준다.", answer = "교훈적", example = new List<char>{'오', '후', '에'}},
+        new questionListGame1 {question = "이 강한 학생들은 항상 새로운 질문을 던진다.", answer = "탐구심", example = new List<char>{'소', '속', '오'}},
+        new questionListGame1 {question = "을 가지고 도로를 건너야 안전할 수 있다.", answer = "경각심", example = new List<char>{'조', '스', '바'}},
+        new questionListGame1 {question = "그 소설은  결말로 많은 독자들을 울렸다.", answer = "비극적인", example = new List<char>{'낭', '마', '있', '는'}},
+        new questionListGame1 {question = "이번 전시는 정말 해서 관람객들의 많은 관심을 받았다.", answer = "흥미진진", example = new List<char>{'차', '별', '화', '된'}},
+        new questionListGame1 {question = "그의 독특함은 그를 주변 사람들과 되게 만들었다.", answer = "차별화", example = new List<char>{'독', '특', '함'}},
+        new questionListGame1 {question = "우리는 각자의 을 소중히 여기고 서로를 존중해야 한다.", answer = "정체성", example = new List<char>{'문', '화', '차'}},
+        new questionListGame1 {question = "이 중요한 직장에서 적응력을 발휘해야 한다.", answer = "유연성", example = new List<char>{'진', '심', '정'}},
+        new questionListGame1 {question = "그녀의 은 프로젝트의 성공에 큰 기여를 했다.", answer = "창의력", example = new List<char>{'큰', '판', '다'}},
+        new questionListGame1 {question = " 있는 리더는 위기 상황에서도 냉철하게 판단할 수 있다.", answer = "통찰력", example = new List<char>{'캔', '조', '림'}},
+        new questionListGame1 {question = "이 문제는 여러 가지 을 찾아야 한다.", answer = "해결책", example = new List<char>{'부', '드', '러'}},
+        new questionListGame1 {question = "많은 사람들은 을 가지고 자신의 꿈을 쫓는다.", answer = "열정", example = new List<char>{'진', '리'}},
+        new questionListGame1 {question = "는 인간관계에서 가장 중요한 요소 중 하나이다.", answer = "신뢰", example = new List<char>{'판', '단'}},
+        new questionListGame1 {question = "그녀는  사고를 통해 문제를 분석했다.", answer = "비판적", example = new List<char>{'긍', '저', '엉'}},
+        new questionListGame1 {question = "이 연구는 정보의 을 높이는 데 기여했다.", answer = "정확성", example = new List<char>{'확', '시', '일'}},
+        new questionListGame1 {question = " 관계를 유지하기 위해서는 서로의 의견을 존중해야 한다.", answer = "조화로운", example = new List<char>{'협', '동', '적'}},
+        new questionListGame1 {question = "목표를 설정하고 그에 따라 을 세우는 것이 중요하다.", answer = "계획", example = new List<char>{'의', '지'}},
+        new questionListGame1 {question = "그의 은 작품에 독특한 매력을 부여했다.", answer = "상상력", example = new List<char>{'작', '품', '성'}},
+        new questionListGame1 {question = "서로를  마음이 필요할 때다.", answer = "배려하는", example = new List<char>{'귀', '찮', '아', '요'}},
+        new questionListGame1 {question = "이 책은 많은 을 쌓는 데 도움을 준다.", answer = "지식", example = new List<char>{'의', '리'}},
+        new questionListGame1 {question = "체계적인 접근이 문제 해결에 이다.", answer = "효과적", example = new List<char>{'울', '올', '욜'}},
+        new questionListGame1 {question = "그들은 협력을 통해 을 극복했다.", answer = "어려움", example = new List<char>{'개', '힘', '듬'}},
+        new questionListGame1 {question = "자율성이 보장된 환경에서 사람들은 더 이다.", answer = "창의적", example = new List<char>{'감', '동', '인'}},
+        new questionListGame1 {question = "우리는 존중을  관계를 발전시켜야 한다.", answer = "바탕으로", example = new List<char>{'화', '면', '넘', '어'}},
+        new questionListGame1 {question = "이 뛰어난 사람은 주변 사람들과 잘 어울린다.", answer = "공감능력", example = new List<char>{'현', '실', '직', '감'}},
+        new questionListGame1 {question = "이 과정은 을 중시하는 교육이다.", answer = "다양성", example = new List<char>{'과', '일', '술'}},
+        new questionListGame1 {question = "가 되어 목표에 더 가까워질 수 있다.", answer = "동기부여", example = new List<char>{'고', '려', '조', '선'}},
+        new questionListGame1 {question = "그녀의  덕분에 상황이 빨리 해결되었다.", answer = "결단력", example = new List<char>{'과', '학', '적'}},
+        new questionListGame1 {question = "예의를 지키는 것이 중요한  규범이다.", answer = "사회적", example = new List<char>{'결', '론', '얘'}},
+        new questionListGame1 {question = "전문성이 요구되는 분야에서는  학습이 필수적이다.", answer = "지속적인", example = new List<char>{'함', '께', '하', '는'}},
+        new questionListGame1 {question = "소통이  팀은 더 나은 결과를 만들어낸다.", answer = "원활한", example = new List<char>{'유', '동', '이'}}
     };
 
     private void Start() {
@@ -299,7 +343,7 @@ public class GameManagerGame1 : MonoBehaviour {
 
     private IEnumerator SpawnObjectCoroutine() {
         while (true) {
-            float spawnTime = Random.Range(0.8f, 1.5f);
+            float spawnTime = Random.Range(0.4f, 1.2f);
             yield return new WaitForSeconds(spawnTime);
             Vector3 cameraPosition = mainCamera.transform.position;
             float xMin = cameraPosition.x - (mainCamera.orthographicSize * mainCamera.aspect);
@@ -345,8 +389,8 @@ public class GameManagerGame1 : MonoBehaviour {
         showScore.text = "점수:" + score;
 
         answerTimer += Time.deltaTime;
-        if (answerTimer < 20f) {
-            float fillAmount = Mathf.Clamp01(answerTimer / 20f);
+        if (answerTimer < 25f) {
+            float fillAmount = Mathf.Clamp01(answerTimer / 25f);
             hintItemImage.fillAmount = fillAmount;
         } else {
             hintItemImage.color = Color.white;
@@ -365,7 +409,7 @@ public class GameManagerGame1 : MonoBehaviour {
     }
 
     public void InputHint() {
-        if (answerTimer >= 20f) {
+        if (answerTimer >= 25f) {
             useHintSound.Play();
             answerTimer = 0;
             score -= 500;

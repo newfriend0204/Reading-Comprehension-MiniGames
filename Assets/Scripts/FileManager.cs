@@ -5,23 +5,23 @@ public class FileManager {
     private string filePath;
 
     public FileManager() {
-        filePath = Path.Combine(Application.persistentDataPath, "data.txt");
-
+        filePath = Path.Combine(Application.persistentDataPath, "dataFile.txt");
+        Debug.Log(Application.persistentDataPath);
         if (!File.Exists(filePath)) {
             string[] initialLines = new string[200];
             for (int i = 0; i < initialLines.Length; i++) {
                 initialLines[i] = "0";
             }
-            initialLines[1] = "2";
             initialLines[15] = "2";
             initialLines[30] = "2";
             initialLines[45] = "2";
-            
+            initialLines[60] = "2";
+
             File.WriteAllLines(filePath, initialLines);
-            Debug.Log("data.txt 파일이 초기화되었습니다. 총 줄 수: " + initialLines.Length);
+            Debug.Log("gameData.txt 파일이 초기화되었습니다. 총 줄 수: " + initialLines.Length);
         } else {
             var lines = File.ReadAllLines(filePath);
-            Debug.Log("data.txt 파일이 존재합니다. 총 줄 수: " + lines.Length);
+            Debug.Log("gameData.txt 파일이 존재합니다. 총 줄 수: " + lines.Length);
         }
     }
 

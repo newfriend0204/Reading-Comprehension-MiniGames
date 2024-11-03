@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.SocialPlatforms.Impl;
-using static GameManagerGame2;
+using System.Security.Cryptography.X509Certificates;
 
 public class questionListGame2 {
     public string question { get; set; }
@@ -32,6 +32,7 @@ public class GameManagerGame2 : MonoBehaviour {
     public TextMeshProUGUI problemText;
     public GameObject stageClear;
     public GameObject portal;
+    public GameObject firstSkybox;
     public Image fadeBackground;
     public TextMeshProUGUI stageClearPhase1Question;
     public TextMeshProUGUI stageClearPhase1Answer;
@@ -49,6 +50,7 @@ public class GameManagerGame2 : MonoBehaviour {
     public int numberOfCoins;
     public int score = 5000;
     private float scoreTimer = 0f;
+    public Material[] skyboxes;
     private FileManager fileManager;
 
     void Awake() {
@@ -232,7 +234,17 @@ public class GameManagerGame2 : MonoBehaviour {
         new questionListGame2 {question = "신체적, 정신적, 사회적으로 완전한 상태를 나타내는 개념이다.", example1 = "건강", example2 = "웰빙"},
         new questionListGame2 {question = "개인의 행동이나 선택에 영향을 미치는 깊은 믿음이나 기준을 의미한다.", example1 = "신념", example2 = "가치관"},
         new questionListGame2 {question = "의사소통을 위한 기호 체계로, 특정한 규칙과 문법을 따른다.", example1 = "언어", example2 = "방언"},
-        new questionListGame2 {question = "무한한 가능성을 탐색하거나 새로운 아이디어를 생성하는 능력을 의미한다.", example1 = "상상", example2 = "창의성"}
+        new questionListGame2 {question = "무한한 가능성을 탐색하거나 새로운 아이디어를 생성하는 능력을 의미한다.", example1 = "상상", example2 = "창의성"},
+        new questionListGame2 {question = "모든 물질의 기본 단위로, 물리적 성질을 가지며 화학 반응에 참여한다.", example1 = "물질", example2 = "원자"},
+        new questionListGame2 {question = "사건의 발생과 흐름을 측정하는 개념으로, 과거, 현재, 미래를 포함한다.", example1 = "시간", example2 = "지속성"},
+        new questionListGame2 {question = "정보를 습득하고 해석하여 의미를 부여하는 능력을 의미한다.", example1 = "지식", example2 = "이해"},
+        new questionListGame2 {question = "생물학적 또는 사회적 유대에 기반한 사람들 간의 관계를 나타낸다.", example1 = "가족", example2 = "혈연"},
+        new questionListGame2 {question = "문제를 해결하거나 새로운 방법을 개발하기 위해 사용하는 도구나 방법이다.", example1 = "기술", example2 = "혁신"},
+        new questionListGame2 {question = "특정 집단이 공유하는 가치관, 신념, 관습의 집합으로, 세대를 넘어 전달된다.", example1 = "문화", example2 = "전통"},
+        new questionListGame2 {question = "개인이 자신의 행동이나 선택을 스스로 결정할 수 있는 상태를 의미한다.", example1 = "자유", example2 = "권리"},
+        new questionListGame2 {question = "미래에 이루고자 하는 희망이나 바람으로, 개인의 삶의 방향을 제시한다.", example1 = "꿈", example2 = "목표"},
+        new questionListGame2 {question = "지식이나 기술을 전달하고 습득하는 과정으로, 개인의 성장에 중요한 역할을 한다.", example1 = "교육", example2 = "학습"},
+        new questionListGame2 {question = "미래에 대한 긍정적인 전망이나 바람으로, 개인이나 공동체의 동기를 부여한다.", example1 = "희망", example2 = "기대"}
     };
 
     private void Start() {
@@ -278,6 +290,16 @@ public class GameManagerGame2 : MonoBehaviour {
             Time.timeScale = 1;
         exhaustAudioSource.loop = true;
         exhaustAudioSource.Play();
+
+        int index = 0;
+        for (int i = 60; i < 75; i++) {
+            if (fileManager.LoadData(i) == 2)
+                index = i - 60;
+        }
+        if (index == 0) {
+            firstSkybox.SetActive(true);
+        } else
+            RenderSettings.skybox = skyboxes[index];
     }
 
     void Update() {
@@ -346,11 +368,11 @@ public class GameManagerGame2 : MonoBehaviour {
     }
 
     private IEnumerator ChangeScoreColor() {
-        Color originalColor = Color.black;
+        Color originalColor = Color.white;
         for (int i = 0; i < 3; i++) {
             scoreText.color = Color.red;
             yield return new WaitForSeconds(0.1f);
-            scoreText.color = Color.black;
+            scoreText.color = Color.white;
             yield return new WaitForSeconds(0.1f);
         }
     }

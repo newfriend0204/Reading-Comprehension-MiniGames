@@ -32,14 +32,19 @@ public class GameManagerMainMenu : MonoBehaviour
     public GameObject shopRightButton;
     private GameObject[] menus;
     private GameObject[] shopMenus;
+    public List<Image> letterPiecesImages;
     public Button[] vehicles;
     public Button[] game1Backgrounds;
+    public Button[] letterPieces;
+    public Button[] game2Backgrounds;
     public GameObject letterObject;
     public Image fadeBackground;
     public TextMeshProUGUI scoreText;
     public AudioClip purchaseSound;
     public AudioClip equipmentSound;
+    public AudioClip pushSound;
     private int score = 0;
+    private float rainbowTime;
     private FileManager fileManager;
 
     public void Awake() {
@@ -60,15 +65,29 @@ public class GameManagerMainMenu : MonoBehaviour
         GameObject title2 = Instantiate(titleText2, new Vector3(72.291f, 9.667f, 17.421f), Quaternion.Euler(29.497f, -54.144f, 0));
         fileManager = new FileManager();
 
-        vehicles[0].onClick.AddListener(() => VehiclePurchase(0, 0));
-        vehicles[1].onClick.AddListener(() => VehiclePurchase(1, 7000));
-        vehicles[2].onClick.AddListener(() => VehiclePurchase(2, 15000));
-        vehicles[3].onClick.AddListener(() => VehiclePurchase(3, 5000));
-        vehicles[4].onClick.AddListener(() => VehiclePurchase(4, 6000));
+        int[] vehiclePrices = { 0, 7000, 15000, 5000, 6000, 4000, 5000, 5000 };
+        for (int i = 0; i < vehicles.Length; i++) {
+            int index = i;
+            vehicles[i].onClick.AddListener(() => VehiclePurchase(index, vehiclePrices[index]));
+        }
 
-        game1Backgrounds[0].onClick.AddListener(() => Game1BackgroundPurchase(0, 0));
-        game1Backgrounds[1].onClick.AddListener(() => Game1BackgroundPurchase(1, 4000));
-        game1Backgrounds[2].onClick.AddListener(() => Game1BackgroundPurchase(2, 6000));
+        int[] game1BackgroundPrices = { 0, 4000, 6000, 5000, 4000, 8000, 8000, 3500, 4000, 3000 };
+        for (int i = 0; i < game1Backgrounds.Length; i++) {
+            int index = i;
+            game1Backgrounds[i].onClick.AddListener(() => Game1BackgroundPurchase(index, game1BackgroundPrices[index]));
+        }
+
+        int[] game2BackgroundPrices = { 0, 4000, 4000, 4000, 3500, 4000, 4500, 4500, 5000, 5000, 2500, 4000 };
+        for (int i = 0; i < game2BackgroundPrices.Length; i++) {
+            int index = i;
+            game2Backgrounds[i].onClick.AddListener(() => Game2BackgroundPurchase(index, game2BackgroundPrices[index]));
+        }
+
+        int[] letterPiecePrices = { 0, 2500, 4000, 4500, 5000, 5000, 5000, 5000, 4000, 6000 };
+        for (int i = 0; i < letterPieces.Length; i++) {
+            int index = i;
+            letterPieces[i].onClick.AddListener(() => LetterPiecePurchase(index, letterPiecePrices[index]));
+        }
     }
 
     private IEnumerator SpawnObjectCoroutine() {
@@ -88,6 +107,7 @@ public class GameManagerMainMenu : MonoBehaviour
     }
 
     public void MoveToGame1() {
+        GetComponent<AudioSource>().PlayOneShot(pushSound, 1f);
         nowMenu = 1;
         StartCoroutine(MoveCameraToGame1());
     }
@@ -108,6 +128,7 @@ public class GameManagerMainMenu : MonoBehaviour
     }
 
     public void MoveToGame2() {
+        GetComponent<AudioSource>().PlayOneShot(pushSound, 1f);
         nowMenu = 2;
         StartCoroutine(MoveCameraToGame2());
     }
@@ -128,6 +149,7 @@ public class GameManagerMainMenu : MonoBehaviour
     }
 
     public void MoveToMainMenu() {
+        GetComponent<AudioSource>().PlayOneShot(pushSound, 1f);
         nowShopMenu = 0;
         nowMenu = 0;
         StartCoroutine(MoveCameraToMainMenu());
@@ -149,6 +171,7 @@ public class GameManagerMainMenu : MonoBehaviour
     }
 
     public void MoveToShop() {
+        GetComponent<AudioSource>().PlayOneShot(pushSound, 1f);
         nowMenu = 3;
         StartCoroutine(MoveCameraToShop());
     }
@@ -187,6 +210,15 @@ public class GameManagerMainMenu : MonoBehaviour
         scoreText.text = "¸ðÀº Á¡¼ö: " + score.ToString();
         score = fileManager.LoadData(0);
 
+        rainbowTime += Time.deltaTime;
+        for (int i = 0; i < letterPiecesImages.Count; i++) {
+            float offset = i * 0.5f;
+            float t = Mathf.PingPong((rainbowTime + offset) / 5, 1f);
+            Color rainbowColor = Color.HSVToRGB(t * 360f / 360f, 1f, 1f);
+
+            letterPiecesImages[i].color = rainbowColor;
+        }
+
         for (int i = 0; i < 15; i++) {
             if (fileManager.LoadData(15 + i) == 2) {
                 TextMeshProUGUI buttonText = vehicles[i].GetComponentInChildren<TextMeshProUGUI>();
@@ -198,6 +230,36 @@ public class GameManagerMainMenu : MonoBehaviour
                 TextMeshProUGUI buttonText = vehicles[i].GetComponentInChildren<TextMeshProUGUI>();
                 buttonText.text = "ÀåÂøÇÏ±â";
                 Image image = vehicles[i].GetComponent<Image>();
+                image.color = new Color(108 / 255f, 255 / 255f, 73 / 255f, 150 / 255f);
+            }
+        }
+
+        for (int i = 0; i < 15; i++) {
+            if (fileManager.LoadData(45 + i) == 2) {
+                TextMeshProUGUI buttonText = letterPieces[i].GetComponentInChildren<TextMeshProUGUI>();
+                buttonText.text = "ÀåÂø Áß";
+                Image image = letterPieces[i].GetComponent<Image>();
+                image.color = new Color(39 / 255f, 111 / 255f, 22 / 255f, 150 / 255f);
+            }
+            if (fileManager.LoadData(45 + i) == 1) {
+                TextMeshProUGUI buttonText = letterPieces[i].GetComponentInChildren<TextMeshProUGUI>();
+                buttonText.text = "ÀåÂøÇÏ±â";
+                Image image = letterPieces[i].GetComponent<Image>();
+                image.color = new Color(108 / 255f, 255 / 255f, 73 / 255f, 150 / 255f);
+            }
+        }
+
+        for (int i = 0; i < 15; i++) {
+            if (fileManager.LoadData(60 + i) == 2) {
+                TextMeshProUGUI buttonText = game2Backgrounds[i].GetComponentInChildren<TextMeshProUGUI>();
+                buttonText.text = "ÀåÂø Áß";
+                Image image = game2Backgrounds[i].GetComponent<Image>();
+                image.color = new Color(39 / 255f, 111 / 255f, 22 / 255f, 150 / 255f);
+            }
+            if (fileManager.LoadData(60 + i) == 1) {
+                TextMeshProUGUI buttonText = game2Backgrounds[i].GetComponentInChildren<TextMeshProUGUI>();
+                buttonText.text = "ÀåÂøÇÏ±â";
+                Image image = game2Backgrounds[i].GetComponent<Image>();
                 image.color = new Color(108 / 255f, 255 / 255f, 73 / 255f, 150 / 255f);
             }
         }
@@ -219,26 +281,32 @@ public class GameManagerMainMenu : MonoBehaviour
     }
 
     public void StartGame1() {
+        GetComponent<AudioSource>().PlayOneShot(pushSound, 1f);
         StartCoroutine(FadeIn(1));
     }
 
     public void StartGame2() {
+        GetComponent<AudioSource>().PlayOneShot(pushSound, 1f);
         StartCoroutine(FadeIn(2));
     }
 
     public void ShowExpalnGame1() {
+        GetComponent<AudioSource>().PlayOneShot(pushSound, 1f);
         game1Explain.gameObject.SetActive(true);
     }
 
     public void HideExpalnGame1() {
+        GetComponent<AudioSource>().PlayOneShot(pushSound, 1f);
         game1Explain.gameObject.SetActive(false);
     }
 
     public void ShowExpalnGame2() {
+        GetComponent<AudioSource>().PlayOneShot(pushSound, 1f);
         game2Explain.gameObject.SetActive(true);
     }
 
     public void HideExpalnGame2() {
+        GetComponent<AudioSource>().PlayOneShot(pushSound, 1f);
         game2Explain.gameObject.SetActive(false);
     }
 
@@ -281,10 +349,12 @@ public class GameManagerMainMenu : MonoBehaviour
     }
 
     public void ShopMoveLeft() {
+        GetComponent<AudioSource>().PlayOneShot(pushSound, 1f);
         nowShopMenu--;
     }
 
     public void ShopMoveRight() {
+        GetComponent<AudioSource>().PlayOneShot(pushSound, 1f);
         nowShopMenu++;
     }
 
@@ -305,6 +375,40 @@ public class GameManagerMainMenu : MonoBehaviour
         }
     }
 
+    public void LetterPiecePurchase(int index, int needScore) {
+        if (needScore <= score && fileManager.LoadData(45 + index) == 0) {
+            GetComponent<AudioSource>().PlayOneShot(purchaseSound, 1f);
+            fileManager.SaveData(1, 45 + index);
+            fileManager.SaveData(score - needScore, 0);
+        } else if (fileManager.LoadData(45 + index) == 1) {
+            for (int i = 0; i < 15; i++) {
+                if (fileManager.LoadData(45 + i) == 2) {
+                    fileManager.SaveData(1, 45 + i);
+                    break;
+                }
+            }
+            GetComponent<AudioSource>().PlayOneShot(equipmentSound, 1f);
+            fileManager.SaveData(2, 45 + index);
+        }
+    }
+
+    public void Game2BackgroundPurchase(int index, int needScore) {
+        if (needScore <= score && fileManager.LoadData(60 + index) == 0) {
+            GetComponent<AudioSource>().PlayOneShot(purchaseSound, 1f);
+            fileManager.SaveData(1, 60 + index);
+            fileManager.SaveData(score - needScore, 0);
+        } else if (fileManager.LoadData(60 + index) == 1) {
+            for (int i = 0; i < 15; i++) {
+                if (fileManager.LoadData(60 + i) == 2) {
+                    fileManager.SaveData(1, 60 + i);
+                    break;
+                }
+            }
+            GetComponent<AudioSource>().PlayOneShot(equipmentSound, 1f);
+            fileManager.SaveData(2, 60 + index);
+        }
+    }
+
     public void VehiclePurchase(int index, int needScore) {
         if (needScore <= score && fileManager.LoadData(15 + index) == 0) {
             GetComponent<AudioSource>().PlayOneShot(purchaseSound, 1f);
@@ -320,5 +424,9 @@ public class GameManagerMainMenu : MonoBehaviour
             GetComponent<AudioSource>().PlayOneShot(equipmentSound, 1f);
             fileManager.SaveData(2, 15 + index);
         }
+    }
+
+    public void DeleteThisFunction() {
+        fileManager.SaveData(score + 20000, 0);
     }
 }

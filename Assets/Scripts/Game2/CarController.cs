@@ -14,6 +14,7 @@ public class CarController : MonoBehaviour {
     public TextMeshProUGUI problemText;
     public Mesh[] visualMeshes;
     public Mesh[] colliderMeshes;
+    public GameObject[] needHiding;
     private FileManager fileManager;
 
     void OnCollisionEnter(Collision collision) {
@@ -145,7 +146,33 @@ public class CarController : MonoBehaviour {
         }
         MeshFilter meshFilter = gameObject.GetComponent<MeshFilter>();
         MeshCollider meshCollider = gameObject.GetComponent<MeshCollider>();
-        meshFilter.mesh = visualMeshes[index];
-        meshCollider.sharedMesh = colliderMeshes[index];
+        if (index > 4) {
+            transform.localScale = transform.localScale * 3.5f;
+            for (int i = 0; i < needHiding.Length; i++)
+                needHiding[i].SetActive(false);
+            meshFilter.mesh = visualMeshes[index];
+            meshCollider.sharedMesh = colliderMeshes[index];
+            Mesh mesh = meshFilter.mesh;
+            Vector3[] vertices = mesh.vertices;
+            for (int i = 0; i < vertices.Length; i++) {
+                vertices[i] = Quaternion.Euler(0, -90, 0) * vertices[i];
+            }
+            mesh.vertices = vertices;
+            mesh.RecalculateBounds();
+            mesh.RecalculateNormals();
+            Mesh colliderMesh = meshCollider.sharedMesh;
+            if (colliderMesh != null) {
+                Vector3[] colliderVertices = colliderMesh.vertices;
+                for (int i = 0; i < colliderVertices.Length; i++) {
+                    colliderVertices[i] = Quaternion.Euler(0, -90, 0) * colliderVertices[i];
+                }
+                colliderMesh.vertices = colliderVertices;
+                colliderMesh.RecalculateBounds();
+                colliderMesh.RecalculateNormals();
+            }
+        } else {
+            meshFilter.mesh = visualMeshes[index];
+            meshCollider.sharedMesh = colliderMeshes[index];
+        }
     }
 }
