@@ -425,8 +425,4 @@ public class GameManagerMainMenu : MonoBehaviour
             fileManager.SaveData(2, 15 + index);
         }
     }
-
-    public void DeleteThisFunction() {
-        fileManager.SaveData(score + 20000, 0);
-    }
 }

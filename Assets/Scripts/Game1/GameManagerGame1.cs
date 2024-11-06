@@ -143,7 +143,7 @@ public class GameManagerGame1 : MonoBehaviour {
         new questionListGame1 {question = "그녀는 항상 을 챙겨서 다닌다.", answer = "필기도구", example = new List<char>{'신', '발'}},
         new questionListGame1 {question = "매일 아침에는 을 먹는 게 중요하다.", answer = "아침식사", example = new List<char>{'간', '식'}},
         new questionListGame1 {question = "새로운 소식을 들으면 을 적는다.", answer = "메모", example = new List<char>{'소', '설'}},
-        new questionListGame1 {question = "도서관에서 을 찾는 것이 쉬웠다.", answer = "책", example = new List<char>{'정', '보'}},
+        new questionListGame1 {question = "도서관에서 을 찾는 것이 쉬웠다.", answer = "책", example = new List<char>{'정', '보'}},
         new questionListGame1 {question = "학교에서 을 잘 듣는 것이 중요하다.", answer = "수업", example = new List<char>{'시', '험'}},
         new questionListGame1 {question = "대기 중 이산화탄소 는 지속적으로 증가하고 있다.", answer = "농도", example = new List<char>{'심', '시'}},
         new questionListGame1 {question = "기후 변화는 인류의 생존에 한 위협이 된다.", answer = "심각", example = new List<char>{'기', '출'}},
