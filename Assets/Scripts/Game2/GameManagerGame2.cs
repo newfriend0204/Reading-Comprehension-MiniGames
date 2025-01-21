@@ -142,7 +142,6 @@ public class GameManagerGame2 : MonoBehaviour {
         new questionListGame2 {question = "특정 단어나 문장이 사용되는 상황이나 배경.", example1 = "문맥", example2 = "맥락"},
         new questionListGame2 {question = "사건이나 생각의 진행 방향이나 패턴.", example1 = "흐름", example2 = "경향"},
         new questionListGame2 {question = "특정한 형태나 체계를 가지는 것.", example1 = "구조적", example2 = "체계적"},
-        new questionListGame2 {question = "어떤 시스템이나 상태가 변하지 않고 지속되는 성질.", example1 = "안정성", example2 = "안정성"},
         new questionListGame2 {question = "어떤 대상을 알아보거나 다가가는 방법.", example1 = "접근", example2 = "다가감"},
         new questionListGame2 {question = "특정 상황에서 이해되는 정보의 연결.", example1 = "맥락", example2 = "배경"},
         new questionListGame2 {question = "어떤 사물이나 현상이 차지하는 위치나 상태.", example1 = "위상", example2 = "상태"},

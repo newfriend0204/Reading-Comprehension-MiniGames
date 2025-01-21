@@ -492,7 +492,6 @@ public class GameManagerGame1 : MonoBehaviour {
         int placeholderCount = question.Count(c => c == '');
         string coloredAnswer = $"<color=blue>{answer}</color>";
         stageClearExplain.text = question.Replace(new string('', placeholderCount), coloredAnswer);
-        fileManager.AddData(score, 0);
     }
 
     public void ReturnMainMenu() {
@@ -535,6 +534,8 @@ public class GameManagerGame1 : MonoBehaviour {
         }
         color.a = 1;
         fadeBackground.color = color;
+        if (isGaming == 0)
+            fileManager.AddData(score, 0);
         if (check == 1)
             SceneManager.LoadScene("MainMenu");
         else if (check == 2)
